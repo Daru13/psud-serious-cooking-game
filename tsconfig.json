@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "module": "es6",
+    "target": "ES6",
+    "rootDir": "./src/ts",
+    "outDir": "./build/js",
+    "pretty": true,
+    "declaration": false,
+    "alwaysStrict": true,
+    "noImplicitAny": true
+  },
+
+  "compileOnSave": false,
+
+  "include": [
+    "src/ts/**/*.ts"
+  ],
+
+  "exclude": [
+    "node_modules",
+    "build"
+  ]
+}
