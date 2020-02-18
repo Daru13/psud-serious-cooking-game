@@ -1,11 +1,18 @@
+import { Game } from '../Game';
+
 export type SceneID = string;
 
 export abstract class Scene {
     abstract id: SceneID;
+
+    protected readonly game: Game;
+
     protected root: HTMLElement;
     protected mounted: boolean;
     
-    constructor() {
+    constructor(game: Game) {
+        this.game = game;
+
         this.root = null;
         this.mounted = false;
     }
@@ -24,6 +31,9 @@ export abstract class Scene {
         parent.append(this.root);
         this.mounted = true;
     };
+
+    beforeMount(): void {}
+    afterMount(): void {}
     
     unmount(): void {
         if (!this.mounted) {
@@ -33,4 +43,7 @@ export abstract class Scene {
         this.root.parentElement.removeChild(this.root);
         this.mounted = false;
     }
+
+    beforeUnmount(): void {}
+    afterUnmount(): void {}
 }

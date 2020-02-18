@@ -1,16 +1,22 @@
 import { Scene, SceneID } from './Scene';
 import { TitleScreenScene } from './TitleScreenScene';
+import { Game } from '../Game';
+import { RecipeCookingScene } from './RecipeCookingScene';
+import { RecipeEvaluationScene } from './RecipeEvaluationScene';
 
 export class Renderer {
     private static readonly CONTAINER_ID = "game-container";
-
     private container: HTMLElement;
+
+    private readonly game: Game;
 
     private scenes: Map<SceneID, Scene>;
     private currentScene: Scene;
 
-    constructor() {
+    constructor(game: Game) {
         this.container = document.getElementById(Renderer.CONTAINER_ID);
+
+        this.game = game;
 
         this.scenes = new Map();
         this.currentScene = null;
@@ -25,7 +31,9 @@ export class Renderer {
 
     private initScenes(): void {
         const scenes = [
-            new TitleScreenScene()
+            new TitleScreenScene(this.game),
+            new RecipeCookingScene(this.game),
+            new RecipeEvaluationScene(this.game),
         ];
 
         for (let scene of scenes) {
@@ -34,14 +42,22 @@ export class Renderer {
     }
 
     private displayScene(id: SceneID): void {
-        if (!this.scenes.has(id)) {
+        if (! this.scenes.has(id)) {
             return;
+        }
+
+        if (this.currentScene !== null) {
+            this.currentScene.beforeMount();
+            this.currentScene.unmount();
+            this.currentScene.afterUnmount();
         }
 
         const newScene = this.scenes.get(id);
 
-        this.currentScene?.unmount();
+        newScene.beforeMount();
         newScene.mount(this.container);
+        newScene.afterMount();
+
         this.currentScene = newScene;
     }
 }
