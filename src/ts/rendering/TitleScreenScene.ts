@@ -1,10 +1,11 @@
 import { Scene, SceneID } from './Scene';
+import { Game } from '../Game';
 
 export class TitleScreenScene extends Scene {
     id: SceneID = "title-screen";
 
-    constructor() {
-        super();
+    constructor(game: Game) {
+        super(game);
         this.createRootElement();
     }
 
