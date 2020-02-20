@@ -40,5 +40,7 @@
                 }
             ]
         }
-    ]
+    ],
+
+    "initiallyAvailableRecipes": ["Recipe 1", "Recipe 2"]
 }
