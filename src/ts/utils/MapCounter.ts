@@ -8,14 +8,14 @@ export type Counts<T> = Count<T>[];
 export class MapCounter<T = any> {
     private counters: Map<T, number>;
 
-    constructor(keys: T[] = []) {
+    constructor(keys: T[] = [], initialValue = 0) {
         this.counters = new Map();
-        this.init(keys);
+        this.init(keys, initialValue);
     }
 
-    private init(keys: T[]): void {
+    private init(keys: T[], value: number): void {
         for (let key of keys) {
-            this.zero(key);
+            this.set(key, value);
         }
     }
 

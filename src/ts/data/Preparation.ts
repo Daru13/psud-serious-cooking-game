@@ -9,10 +9,10 @@ export class Preparation {
     private mixedIngredientNames: Set<IngredientName>;
     private rejectedIngredientsCounts: MapCounter<IngredientName>;
 
-    constructor(targetRecipe: Recipe) {
+    constructor(targetRecipe: Recipe, availableIngredientNames: IngredientName[]) {
         this.targetRecipe = targetRecipe;
 
-        this.availableIngredientsCounts = new MapCounter();
+        this.availableIngredientsCounts = new MapCounter(availableIngredientNames, 1);
         this.mixedIngredientNames = new Set();
         this.rejectedIngredientsCounts = new MapCounter();
     }

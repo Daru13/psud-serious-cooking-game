@@ -52,7 +52,10 @@ export class Game {
 
         EventManager.registerHandler(StartCookingEvent, (event: StartCookingEvent) => {
             console.log("StartCookingEvent", event);
-            this.currentPreparation = new Preparation(event.recipe);
+
+            const ingredientNames = this.data.ingredients.map(ingredient => ingredient.name);
+            this.currentPreparation = new Preparation(event.recipe, ingredientNames);
+
             this.renderer.displayScene(RecipeCookingScene.id);
         });
 
