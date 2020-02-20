@@ -1,4 +1,5 @@
 import { Recipe, RecipeName } from './data/Recipe';
+import { GameData } from './data/GameData';
 
 export interface RecipeCookingLog {
     nbSuccesses: number;
@@ -16,9 +17,9 @@ export class PlayerProgress {
     private recipeCookingLogs: Map<RecipeName, RecipeCookingLog>;
     private unlockedRecipeNames: Set<RecipeName>;
 
-    constructor() {
+    constructor(gameData: GameData) {
         this.recipeCookingLogs = new Map();
-        this.unlockedRecipeNames = new Set();
+        this.unlockedRecipeNames = new Set(gameData.initiallyAvailableRecipeNames);
     }
 
     private getOrCreateLog(recipe: Recipe): RecipeCookingLog {
@@ -70,8 +71,8 @@ export class PlayerProgress {
         localStorage.setItem(PlayerProgress.LOCAL_STORAGE_KEY, JSON.stringify(serialisedProgress));
     }
 
-    static loadFromLocalStorageOrCreate(): PlayerProgress {
-        const playerProgress = new PlayerProgress();
+    static loadFromLocalStorageOrCreate(gameData: GameData): PlayerProgress {
+        const playerProgress = new PlayerProgress(gameData);
         
         const serialisedProgressCandidate = localStorage.getItem(PlayerProgress.LOCAL_STORAGE_KEY);
         if (serialisedProgressCandidate === null) {

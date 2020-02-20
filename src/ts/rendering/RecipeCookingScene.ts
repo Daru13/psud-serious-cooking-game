@@ -3,9 +3,12 @@ import { Recipe } from '../data/Recipe';
 import { Ingredient } from '../data/Ingredient';
 import { Game } from '../Game';
 import { emptyElement } from '../utils/DOMUtils';
+import { EventManager } from '../events/EventManager';
+import { FinishCookingEvent } from '../events/FinishCookingEvent';
 
 export class RecipeCookingScene extends Scene {
-    id: SceneID = "recipe-cooking";
+    static id: SceneID = "recipe-cooking";
+    id: SceneID = RecipeCookingScene.id;
 
     private recipe: Recipe;
     private ingredients: Ingredient[];
@@ -72,8 +75,7 @@ export class RecipeCookingScene extends Scene {
         doneButton.textContent = "Done";
         doneButton.classList.add("done-button");
         doneButton.addEventListener("click", () => {
-            // TODO: implement the done
-            console.log("Done button was pressed");
+            EventManager.emit(new FinishCookingEvent());
         });
         titleBar.append(doneButton);
 

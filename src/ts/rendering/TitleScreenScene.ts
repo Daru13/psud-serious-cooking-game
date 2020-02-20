@@ -1,8 +1,12 @@
 import { Scene, SceneID } from './Scene';
 import { Game } from '../Game';
+import { EventManager } from '../events/EventManager';
+import { StartCookingEvent } from '../events/StartCookingEvent';
+import { DisplayRecipeListEvent } from '../events/DisplayRecipeListEvent';
 
 export class TitleScreenScene extends Scene {
-    id: SceneID = "title-screen";
+    static id: SceneID = "title-screen";
+    id: SceneID = TitleScreenScene.id;
 
     constructor(game: Game) {
         super(game);
@@ -27,7 +31,8 @@ export class TitleScreenScene extends Scene {
         playButton.textContent = "Play";
         playButton.classList.add("play-button");
         playButton.addEventListener("click", () => {
-            // TODO
+            const targetRecipe = this.game.getRandomUnlockedRecipe();
+            EventManager.emit(new StartCookingEvent(targetRecipe));
         });
         menu.append(playButton);
 
@@ -35,7 +40,7 @@ export class TitleScreenScene extends Scene {
         recipeListButton.textContent = "Recipes";
         recipeListButton.classList.add("recipes-button");
         recipeListButton.addEventListener("click", () => {
-            // TODO
+            EventManager.emit(new DisplayRecipeListEvent());
         });
         menu.append(recipeListButton);
     }

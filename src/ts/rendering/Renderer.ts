@@ -41,7 +41,7 @@ export class Renderer {
         }
     }
 
-    private displayScene(id: SceneID): void {
+    displayScene(id: SceneID): void {
         if (! this.scenes.has(id)) {
             return;
         }
