@@ -47,7 +47,7 @@ export class Renderer {
         }
 
         if (this.currentScene !== null) {
-            this.currentScene.beforeMount();
+            this.currentScene.beforeUnmount();
             this.currentScene.unmount();
             this.currentScene.afterUnmount();
         }
