@@ -10,10 +10,8 @@ export class RecipeCookingScene extends Scene {
     static id: SceneID = "recipe-cooking";
     id: SceneID = RecipeCookingScene.id;
 
-    private recipe: Recipe;
-    private ingredients: Ingredient[];
-
-    private timerStartTimestamp: number;
+    private isPaused: boolean;
+    private elapsedSeconds: number;
     private timerInterval: number;
 
     private timerNode: HTMLElement;
@@ -23,8 +21,8 @@ export class RecipeCookingScene extends Scene {
     constructor(game: Game) {
         super(game);
 
-        this.recipe = null;
-        this.ingredients = [];
+        this.isPaused = false;
+        this.elapsedSeconds = 0;
         this.timerInterval = -1;
 
         this.timerNode = null;
@@ -53,8 +51,7 @@ export class RecipeCookingScene extends Scene {
         pauseButton.textContent = "Pause";
         pauseButton.classList.add("pause-button");
         pauseButton.addEventListener("click", () => {
-            // TODO: implement the pause
-            console.log("Pause button was pressed");
+            this.isPaused = !this.isPaused;
         });
         titleBar.append(pauseButton);
 
@@ -102,11 +99,9 @@ export class RecipeCookingScene extends Scene {
         this.ingredientListNode = ingredientList;
     }
 
-    private updateTimer(currentTimestamp: number): void {
-        const diffInSeconds = (currentTimestamp - this.timerStartTimestamp) * 1000;
-        
-        const minutes = Math.floor(diffInSeconds / 60)
-        const seconds = diffInSeconds % 60;
+    private updateTimer(): void {
+        const minutes = Math.floor(this.elapsedSeconds / 60)
+        const seconds = this.elapsedSeconds % 60;
 
         const minutesString = minutes.toFixed(0);
         const secondsString = (seconds < 10 ? "0" : "") + seconds.toFixed(0);
@@ -119,7 +114,7 @@ export class RecipeCookingScene extends Scene {
         const availableIngredientNames = this.game.currentPreparation
             .getAllAvailableIngredients()
             .map(count => count.key);
-    
+
         emptyElement(this.ingredientListNode);
         for (let ingredientName of availableIngredientNames) {
             const ingredient = document.createElement("div");
@@ -140,9 +135,14 @@ export class RecipeCookingScene extends Scene {
 
     afterMount(): void {
         // Start the timer
-        this.timerStartTimestamp = Date.now();
+        this.elapsedSeconds = 0;
         this.timerInterval = window.setInterval(() => {
-            this.updateTimer(Date.now());
+            if (this.isPaused) {
+                return;
+            }
+
+            this.elapsedSeconds += 1;
+            this.updateTimer();
         }, 1000);
     }
 
