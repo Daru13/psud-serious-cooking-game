@@ -1,0 +1,44 @@
+{
+    "ingredients": [
+        { "name": "Ingredient A" },
+        { "name": "Ingredient B" },
+        { "name": "Ingredient C" },
+        { "name": "Ingredient D" },
+        { "name": "Ingredient E" }
+    ],
+
+    "recipes": [
+        {
+            "name": "Recipe 1",
+            "category": "Breakfast",
+            "level": 1,
+            "requiredIngredientNames": ["Ingredient A"],
+            "optionalIngredientNames": ["Ingredient B", "Ingredient C"],
+            "ingredientEffects": [
+                {
+                    "ingredientNames": ["Ingredient B"],
+                    "type": "POSITIVE",
+                    "reason": "Ingredient B has very little sugar, that's a good choice!"
+                },
+                {
+                    "ingredientNames": ["Ingredient B", "Ingredient C"],
+                    "type": "NEGATIVE",
+                    "reason": "Ingredient C has a lot of palm oil inside, which is bad for health. Ingredient B alone is sweet enough for this recipe!"
+                }
+            ]
+        },
+        {
+            "name": "Recipe 2",
+            "category": "Breakfast",
+            "level": 2,
+            "requiredIngredientNames": ["Ingredient A", "Ingredient D", "Ingredient E"],
+            "optionalIngredientNames": ["Ingredient B"],
+            "ingredientEffects": [
+                {
+                    "ingredientNames": ["Ingredient B"],
+                    "type": "POSITIVE"
+                }
+            ]
+        }
+    ]
+}

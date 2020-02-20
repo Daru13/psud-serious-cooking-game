@@ -1,4 +1,5 @@
 import copy from "rollup-plugin-copy";
+import json from "rollup-plugin-json";
 import typescript from "rollup-plugin-typescript2"
 import { terser } from "rollup-plugin-terser";
 import pkg from "./package.json"
@@ -11,7 +12,7 @@ export default {
       file: "build/js/main.min.js",
       format: "umd",
       globals: {},
-      plugins: [terser()]
+      plugins: [/*terser()*/]
     }
   ],
 
@@ -21,6 +22,7 @@ export default {
   ],
 
   plugins: [
+    json(),
     typescript({
       typescript: require("typescript"),
       objectHashIgnoreUnknownHack: true

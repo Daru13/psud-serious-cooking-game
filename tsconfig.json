@@ -7,7 +7,9 @@
     "pretty": true,
     "declaration": false,
     "alwaysStrict": true,
-    "noImplicitAny": true
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "resolveJsonModule": true
   },
 
   "compileOnSave": false,
