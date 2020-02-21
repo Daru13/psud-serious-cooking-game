@@ -7,12 +7,12 @@ import { Game } from '../Game';
 import { emptyElement } from '../utils/DOMUtils';
 import { EventManager } from '../events/EventManager';
 import { FinishCookingEvent } from '../events/FinishCookingEvent';
+import { DisplayTitleScreenEvent } from '../events/DisplayTitleScreenEvent';
 
 export class RecipeCookingScene extends Scene {
     static id: SceneID = "recipe-cooking";
     id: SceneID = RecipeCookingScene.id;
 
-    private isPaused: boolean;
     private elapsedSeconds: number;
     private timerInterval: number;
     private draggedIngredientName: IngredientName | null;
@@ -26,7 +26,6 @@ export class RecipeCookingScene extends Scene {
     constructor(game: Game) {
         super(game);
 
-        this.isPaused = false;
         this.elapsedSeconds = 0;
         this.timerInterval = -1;
         this.draggedIngredientName = null;
@@ -53,15 +52,15 @@ export class RecipeCookingScene extends Scene {
         titleBar.classList.add("title-bar");
         this.root.append(titleBar);
 
-        // Pause button
-        const pauseButton = document.createElement("button");
-        pauseButton.type = "button";
-        pauseButton.textContent = "Pause";
-        pauseButton.classList.add("pause-button");
-        pauseButton.addEventListener("click", () => {
-            this.isPaused = !this.isPaused;
+        // Title screen button
+        const titleScreenButton = document.createElement("button");
+        titleScreenButton.type = "button";
+        titleScreenButton.textContent = "Title screen";
+        titleScreenButton.classList.add("title-screen-button");
+        titleScreenButton.addEventListener("click", () => {
+            EventManager.emit(new DisplayTitleScreenEvent());
         });
-        titleBar.append(pauseButton);
+        titleBar.append(titleScreenButton);
 
         // Recipe title
         const recipeTitle = document.createElement("h2");
@@ -213,10 +212,6 @@ export class RecipeCookingScene extends Scene {
         // Start the timer
         this.elapsedSeconds = 0;
         this.timerInterval = window.setInterval(() => {
-            if (this.isPaused) {
-                return;
-            }
-
             this.elapsedSeconds += 1;
             this.updateTimer();
         }, 1000);

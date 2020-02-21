@@ -116,7 +116,7 @@ html, body, #game-container, .scene {
     color: #FFF;
 }
 
-#recipe-cooking .title-bar .pause-button,
+#recipe-cooking .title-bar .title-screen-button,
 #recipe-cooking .title-bar .done-button {
     background-color: #44D;
     border: none;
@@ -124,14 +124,14 @@ html, body, #game-container, .scene {
     font-size: 2rem;
 }
 
-#recipe-cooking .title-bar .pause-button:hover,
-#recipe-cooking .title-bar .pause-button:active,
+#recipe-cooking .title-bar .title-screen-button:hover,
+#recipe-cooking .title-bar .title-screen-button:active,
 #recipe-cooking .title-bar .done-button:hover,
 #recipe-cooking .title-bar .done-button:active {
     background-color: #11B;
 }
 
-#recipe-cooking .title-bar .pause-button {
+#recipe-cooking .title-bar .title-screen-button {
     width: 150px;
 }
 
