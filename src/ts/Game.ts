@@ -41,18 +41,14 @@ export class Game {
 
     registerAllEventHandlers(): void {
         EventManager.registerHandler(DisplayTitleScreenEvent, () => {
-            console.log("DisplayTitleScreenEvent");
             this.renderer.displayScene(TitleScreenScene.id);
         });
 
         EventManager.registerHandler(DisplayRecipeListEvent, () => {
-            console.log("DisplayRecipeListEvent");
             // TODO
         });
 
         EventManager.registerHandler(StartCookingEvent, (event: StartCookingEvent) => {
-            console.log("StartCookingEvent", event);
-
             const ingredientNames = this.data.ingredients.map(ingredient => ingredient.name);
             this.currentPreparation = new Preparation(event.recipe, ingredientNames);
 
@@ -60,10 +56,7 @@ export class Game {
         });
 
         EventManager.registerHandler(FinishCookingEvent, () => {
-            console.log("FinishCookingEvent");
-
             this.progress.logPreparation(this.currentPreparation);
-
             this.renderer.displayScene(RecipeEvaluationScene.id);
         });
     }
