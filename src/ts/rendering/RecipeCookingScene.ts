@@ -1,6 +1,8 @@
+import interact from "interactjs";
+
 import { SceneID, Scene } from './Scene';
 import { Recipe } from '../data/Recipe';
-import { Ingredient } from '../data/Ingredient';
+import { Ingredient, IngredientName } from '../data/Ingredient';
 import { Game } from '../Game';
 import { emptyElement } from '../utils/DOMUtils';
 import { EventManager } from '../events/EventManager';
@@ -13,9 +15,11 @@ export class RecipeCookingScene extends Scene {
     private isPaused: boolean;
     private elapsedSeconds: number;
     private timerInterval: number;
+    private draggedIngredientName: IngredientName | null;
 
     private timerNode: HTMLElement;
-    private recipeTitleNode: HTMLElement;
+    private doneButtonNode: HTMLButtonElement;
+    private recipeTitleNode: HTMLHeadingElement;
     private ingredientListNode: HTMLElement;
 
     constructor(game: Game) {
@@ -24,8 +28,10 @@ export class RecipeCookingScene extends Scene {
         this.isPaused = false;
         this.elapsedSeconds = 0;
         this.timerInterval = -1;
+        this.draggedIngredientName = null;
 
         this.timerNode = null;
+        this.doneButtonNode = null;
         this.recipeTitleNode = null;
         this.ingredientListNode = null;
 
@@ -77,6 +83,7 @@ export class RecipeCookingScene extends Scene {
         titleBar.append(doneButton);
 
         this.timerNode = timer;
+        this.doneButtonNode = doneButton;
         this.recipeTitleNode = recipeTitle;
     }
 
@@ -88,6 +95,24 @@ export class RecipeCookingScene extends Scene {
         // Drop zone
         const ingredientDropZone = document.createElement("div");
         ingredientDropZone.classList.add("ingredient-drop-zone");
+
+        interact(ingredientDropZone).dropzone({
+            accept: ".ingredient",
+
+            ondragenter: () => { ingredientDropZone.classList.add("drop-enabled"); },
+            ondragleave: () => { ingredientDropZone.classList.remove("drop-enabled"); },
+            ondrop: () => {
+                const ingredientName = this.draggedIngredientName;
+                this.draggedIngredientName = null;
+
+                ingredientDropZone.classList.remove("drop-enabled");
+    
+                this.game.currentPreparation.use(ingredientName);
+                this.updateIngredient(ingredientName);
+                this.updateDoneButton();
+            },
+        });
+
         cookingSpace.append(ingredientDropZone);    
     }
 
@@ -120,14 +145,51 @@ export class RecipeCookingScene extends Scene {
             const ingredient = document.createElement("div");
             ingredient.innerText = ingredientName;
             ingredient.classList.add("ingredient");
+            ingredient.setAttribute("data-ingredient", ingredientName);
+            
+            interact(ingredient).draggable({
+                listeners: {
+                    start: () => {
+                        this.draggedIngredientName = ingredientName;
+                    },
+
+                    move(event) {
+                        // TODO
+                    }
+                }
+            })
+            .on("click", () => {
+                if (this.game.currentPreparation.contains(ingredientName)) {
+                    this.game.currentPreparation.takeBack(ingredientName);
+
+                    this.updateIngredient(ingredientName);
+                    this.updateDoneButton();
+                }
+            });
+
             this.ingredientListNode.append(ingredient);   
         }
+    }
+
+    private updateIngredient(ingredientName: IngredientName) {
+        const ingredient = this.ingredientListNode
+            .querySelector(`*[data-ingredient="${ingredientName}"]`) as HTMLElement;
+
+        const alreadyUsed = this.game.currentPreparation.contains(ingredientName);
+        ingredient.classList.toggle("already-used", alreadyUsed);
+    }
+
+    private updateDoneButton() {
+        this.doneButtonNode.disabled = !this.game.currentPreparation.isFinished();
     }
 
     beforeMount(): void {
         // Update the title
         const preparationName = this.game.currentPreparation.targetRecipe.name;
         this.recipeTitleNode.innerText = preparationName;
+
+        // Update the done button
+        this.updateDoneButton();
 
         // Update the list of ingredients
         this.updateIngredientList();

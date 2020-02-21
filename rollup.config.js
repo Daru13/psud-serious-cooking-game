@@ -11,7 +11,9 @@ export default {
     {
       file: "build/js/main.min.js",
       format: "umd",
-      globals: {},
+      globals: {
+        "interactjs": "interact"
+      },
       plugins: [/*terser()*/]
     }
   ],

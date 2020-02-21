@@ -6,23 +6,25 @@ export class Preparation {
     readonly targetRecipe: Recipe;
 
     private availableIngredientsCounts: MapCounter<IngredientName>;
-    private mixedIngredientNames: Set<IngredientName>;
+    private mixedIngredientNames: MapCounter<IngredientName>;
     private rejectedIngredientsCounts: MapCounter<IngredientName>;
 
     constructor(targetRecipe: Recipe, availableIngredientNames: IngredientName[]) {
         this.targetRecipe = targetRecipe;
 
         this.availableIngredientsCounts = new MapCounter(availableIngredientNames, 1);
-        this.mixedIngredientNames = new Set();
+        this.mixedIngredientNames = new MapCounter();
         this.rejectedIngredientsCounts = new MapCounter();
     }
 
     getAllAvailableIngredients(): Counts<IngredientName> {
-        return this.availableIngredientsCounts.getAllCounts();
+        return this.availableIngredientsCounts
+            .getAllCounts()
+            .filter(ingredient => ingredient.count > 0);
     }
 
     contains(ingredientName: IngredientName): boolean {
-        return this.mixedIngredientNames.has(ingredientName);
+        return this.mixedIngredientNames.getCountOf(ingredientName) > 0;
     }
 
     private add(ingredientName: IngredientName): boolean {
@@ -31,7 +33,7 @@ export class Preparation {
             return false;
         }
 
-        this.mixedIngredientNames.add(ingredientName);
+        this.mixedIngredientNames.increment(ingredientName);
         return true;
     }
 
@@ -46,6 +48,16 @@ export class Preparation {
         }
 
         return successfullyUsed;
+    }
+
+    takeBack(ingredientName: IngredientName): boolean {
+        if (this.mixedIngredientNames.getCountOf(ingredientName) === 0) {
+            return false;
+        }
+
+        this.mixedIngredientNames.decrement(ingredientName);
+        this.availableIngredientsCounts.increment(ingredientName);
+        return true;
     }
 
     isFinished(): boolean {

@@ -5,6 +5,7 @@
 * {
     box-sizing: border-box;
     user-select: none;
+    touch-action: none;
 }
 
 html, body, #game-container, .scene {
@@ -132,6 +133,10 @@ html, body, #game-container, .scene {
     width: 150px;
 }
 
+#recipe-cooking .title-bar .done-button:disabled {
+    background-color: #666;
+}
+
 #recipe-cooking .cooking-space {
     grid-area: cooking-space;
     width: 100%;
@@ -143,6 +148,10 @@ html, body, #game-container, .scene {
     height: calc(100% - 40px);
     margin: 20px;
     border: 4px dashed #44D;
+}
+
+#recipe-cooking .cooking-space .ingredient-drop-zone.drop-enabled {
+    border-color: #D44;
 }
 
 #recipe-cooking .ingredient-list {
@@ -162,13 +171,21 @@ html, body, #game-container, .scene {
     height: 20vh;
     padding: 5vh;
     margin: 2.5vh;
-    background-color: #EEE;
+    /* background-color: #EEE; */
     font-size: 1.5rem;
     color: #000;
     word-wrap: break-word;
     white-space: normal;
 }
 
+#recipe-cooking .ingredient-list .ingredient.already-used {
+    opacity: 0.5;
+}
+
+#recipe-cooking .ingredient-list .ingredient.already-used:hover,
+#recipe-cooking .ingredient-list .ingredient.already-used:active {
+    background-color: red;
+}
 
 
 /**********************************************************/
@@ -245,4 +262,30 @@ html, body, #game-container, .scene {
 #recipe-evaluation .action-bar > button:hover,
 #recipe-evaluation .action-bar > button:active {
     background-color: #11B;
+}
+
+
+
+/**********************************************************/
+/* Ingredients
+/**********************************************************/
+
+*[data-ingredient="Ingredient A"] {
+    background-color: red;
+}
+
+*[data-ingredient="Ingredient B"] {
+    background-color: blue;
+}
+
+*[data-ingredient="Ingredient C"] {
+    background-color: orange;
+}
+
+*[data-ingredient="Ingredient D"] {
+    background-color: green;
+}
+
+*[data-ingredient="Ingredient E"] {
+    background-color: purple;
 }
