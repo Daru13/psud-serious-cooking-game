@@ -32,14 +32,16 @@ export class PlayerProgress {
     private nbCoins: number;
     private recipeDetails: Map<RecipeName, RecipeDetails>;
 
-    constructor(gameData: GameData) {
+    private constructor(gameData: GameData, initialise = true) {
         this.gameData = gameData;
 
         this.nbCoins = 0;
         this.recipeDetails = new Map();
 
-        // Unlock all recipes which are available by default
-        this.unlockDefaultRecipes();
+        if (initialise) {
+            // Unlock all recipes which are available by default
+            this.unlockDefaultRecipes();
+        }
     }
 
     getNbCoins(): number {
@@ -101,11 +103,15 @@ export class PlayerProgress {
         if (quality === PreparationQuality.Perfect) {
             details.hasStarBadge = true;
         }
+
+        this.saveInLocalStorage();
     }
     
     unlockRecipe(recipeName: RecipeName): void {
         const details = this.getRecipeDetails(recipeName);
         details.isUnlocked = true;
+
+        this.saveInLocalStorage();
     }
 
     private unlockDefaultRecipes(): void {
@@ -134,13 +140,13 @@ export class PlayerProgress {
     }
 
     static loadFromLocalStorageOrCreate(gameData: GameData): PlayerProgress {
-        const playerProgress = new PlayerProgress(gameData);
-        
         const serialisedProgressCandidate = localStorage.getItem(PlayerProgress.LOCAL_STORAGE_KEY);
+        console.log(serialisedProgressCandidate);
         if (serialisedProgressCandidate === null) {
-            return playerProgress;
+            return new PlayerProgress(gameData, true);
         }
 
+        const playerProgress = new PlayerProgress(gameData, false);
         const serialisedProgress = JSON.parse(serialisedProgressCandidate) as SerialisedPlayerProgress;
         
         // Coins
