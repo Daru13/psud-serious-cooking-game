@@ -1,71 +1,133 @@
-import { Recipe, RecipeName } from './data/Recipe';
+import { RecipeName, RecipeCategory } from './data/Recipe';
 import { GameData } from './data/GameData';
+import { MapCounter, Counts } from './utils/MapCounter';
+import { PreparationQuality, Preparation } from './data/Preparation';
 
-export interface RecipeCookingLog {
-    nbSuccesses: number;
-    nbFailures: number;
+export interface RecipeDetails {
+    recipeName: RecipeName;
+    isUnlocked: boolean;
+    hasStarBadge: boolean;
+    nbPreparations: number;
+    preparationQualityCounts: MapCounter<PreparationQuality>;
+}
+
+interface SerialisedRecipeDetails {
+    recipeName: RecipeName;
+    isUnlocked: boolean;
+    hasStarBadge: boolean;
+    nbPreparations: number;
+    preparationQualityCounts: Counts<PreparationQuality>;    
 }
 
 interface SerialisedPlayerProgress {
-    recipeCookingLogs: Record<RecipeName, RecipeCookingLog>;
-    unlockedRecipeNames: RecipeName[];
+    nbCoins: number;
+    recipeDetails: SerialisedRecipeDetails[];
 }
 
 export class PlayerProgress {
     private static readonly LOCAL_STORAGE_KEY = "playerProgress";
 
-    private recipeCookingLogs: Map<RecipeName, RecipeCookingLog>;
-    private unlockedRecipeNames: Set<RecipeName>;
+    private gameData: GameData;
+
+    private nbCoins: number;
+    private recipeDetails: Map<RecipeName, RecipeDetails>;
 
     constructor(gameData: GameData) {
-        this.recipeCookingLogs = new Map();
-        this.unlockedRecipeNames = new Set(gameData.initiallyAvailableRecipeNames);
+        this.gameData = gameData;
+
+        this.nbCoins = 0;
+        this.recipeDetails = new Map();
+
+        // Unlock all recipes which are available by default
+        this.unlockDefaultRecipes();
     }
 
-    private getOrCreateLog(recipe: Recipe): RecipeCookingLog {
-        if (!this.recipeCookingLogs.has(recipe.name)) {
-            this.recipeCookingLogs.set(recipe.name, {
-                nbSuccesses: 0,
-                nbFailures: 0
+    getNbCoins(): number {
+        return this.nbCoins;
+    }
+
+    getNbTrophies(): number {
+        // Players get one trophy once they have cooked
+        // all the recipes of one category with Perfect quality
+        const groupedRecipes = this.gameData.getRecipesGroupedByCategory();
+
+        return [...groupedRecipes.values()]
+            .reduce((nbTrophies, group) => {
+                const allGroupedRecipesAreStared = group.every(
+                    (recipe) => this.getRecipeDetails(recipe.name).hasStarBadge
+                );
+
+                return nbTrophies
+                    + (allGroupedRecipesAreStared ? 1 : 0);
+            }, 0);
+    }
+
+    getRecipeDetails(recipeName: RecipeName): RecipeDetails {
+        if (! this.recipeDetails.has(recipeName)) {
+            this.recipeDetails.set(recipeName, {
+                recipeName: recipeName,
+                isUnlocked: false,
+                hasStarBadge: false,
+                nbPreparations: 0,
+                preparationQualityCounts: new MapCounter()
             });
         }
 
-        return this.recipeCookingLogs.get(recipe.name);
+        return this.recipeDetails.get(recipeName);
     }
 
-    getCookingLog(recipe: Recipe): Readonly<RecipeCookingLog> | null {
-        return this.recipeCookingLogs.get(recipe.name) ?? null;
+    getUnlockedRecipeNames(): RecipeName[] {
+        return [...this.recipeDetails.values()]
+            .filter(details => details.isUnlocked)
+            .map(details => details.recipeName);
     }
 
-    getUnlockedRecipeNames(): ReadonlySet<RecipeName> {
-        return this.unlockedRecipeNames;
+    getStaredRecipeNames(): RecipeName[] {
+        return [...this.recipeDetails.values()]
+        .filter(details => details.hasStarBadge)
+        .map(details => details.recipeName);
     }
 
-    logCookingSuccess(recipe: Recipe): void {
-        const log = this.getOrCreateLog(recipe);
-        log.nbSuccesses += 1;
+    logPreparation(preparation: Preparation): void {
+        const details = this.getRecipeDetails(preparation.targetRecipe.name);
+
+        const reward = preparation.computeReward();
+        this.nbCoins += reward;
+
+        const quality = preparation.computeQuality();
+        details.nbPreparations += 1;
+        details.preparationQualityCounts.increment(quality);
+
+        if (quality === PreparationQuality.Perfect) {
+            details.hasStarBadge = true;
+        }
+    }
+    
+    unlockRecipe(recipeName: RecipeName): void {
+        const details = this.getRecipeDetails(recipeName);
+        details.isUnlocked = true;
     }
 
-    logCookingFailure(recipe: Recipe): void {
-        const log = this.getOrCreateLog(recipe);
-        log.nbFailures += 1;
-    }
-
-    unlockRecipe(recipe: Recipe): void {
-        this.unlockedRecipeNames.add(recipe.name);
+    private unlockDefaultRecipes(): void {
+        for (let recipeName of this.gameData.initiallyAvailableRecipeNames) {
+            this.unlockRecipe(recipeName);
+        }
     }
 
     saveInLocalStorage(): void {
         const serialisedProgress: SerialisedPlayerProgress = {
-            recipeCookingLogs: {},
-            unlockedRecipeNames: []
+            nbCoins: this.nbCoins,
+            recipeDetails: [],
         };
 
-        for (let [recipeName, cookingLog] of this.recipeCookingLogs.entries()) {
-            serialisedProgress.recipeCookingLogs[recipeName] = cookingLog;
-        }
-        for (let recipeName of this.unlockedRecipeNames.values()) {
-            serialisedProgress.unlockedRecipeNames.push(recipeName);
+        for (let details of this.recipeDetails.values()) {
+            serialisedProgress.recipeDetails.push({
+                recipeName: details.recipeName,
+                isUnlocked: details.isUnlocked,
+                hasStarBadge: details.hasStarBadge,
+                nbPreparations: details.nbPreparations,
+                preparationQualityCounts: details.preparationQualityCounts.getAllCounts()
+            });
         }
 
         localStorage.setItem(PlayerProgress.LOCAL_STORAGE_KEY, JSON.stringify(serialisedProgress));
@@ -80,11 +142,21 @@ export class PlayerProgress {
         }
 
         const serialisedProgress = JSON.parse(serialisedProgressCandidate) as SerialisedPlayerProgress;
-        for (let recipeName in Object.keys(serialisedProgress.recipeCookingLogs)) {
-            playerProgress.recipeCookingLogs.set(recipeName, serialisedProgress.recipeCookingLogs[recipeName]);
-        }
-        for (let recipeName in Object.keys(serialisedProgress.unlockedRecipeNames)) {
-            playerProgress.unlockedRecipeNames.add(recipeName);
+        
+        // Coins
+        playerProgress.nbCoins = serialisedProgress.nbCoins;
+
+        // Recipe details
+        for (let serialisedDetails of serialisedProgress.recipeDetails) {
+            const details = playerProgress.getRecipeDetails(serialisedDetails.recipeName);
+
+            details.isUnlocked = serialisedDetails.isUnlocked;
+            details.hasStarBadge = serialisedDetails.hasStarBadge;
+            details.nbPreparations = serialisedDetails.nbPreparations;
+            
+            for (let {key, count} of serialisedDetails.preparationQualityCounts) {
+                details.preparationQualityCounts.set(key, count);
+            }
         }
 
         return playerProgress;
