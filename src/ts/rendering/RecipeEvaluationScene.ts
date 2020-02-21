@@ -93,14 +93,14 @@ export class RecipeEvaluationScene extends Scene {
         actionBar.append(titleScreenButton);
 
         // Next recipe button
-        const recipeListButton = document.createElement("button");
-        recipeListButton.textContent = "Recipes";
-        recipeListButton.classList.add("recipes-button");
-        recipeListButton.addEventListener("click", () => {
+        const nextRecipeButton = document.createElement("button");
+        nextRecipeButton.textContent = "Next recipe";
+        nextRecipeButton.classList.add("next-recipe-button");
+        nextRecipeButton.addEventListener("click", () => {
             const targetRecipe = this.game.getRandomUnlockedRecipe();
             EventManager.emit(new StartCookingEvent(targetRecipe));
         });
-        actionBar.append(recipeListButton);
+        actionBar.append(nextRecipeButton);
     }
 
     private updateReward(): void {
