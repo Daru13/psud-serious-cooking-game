@@ -20,6 +20,7 @@ export class RecipeCookingScene extends Scene {
     private timerNode: HTMLElement;
     private doneButtonNode: HTMLButtonElement;
     private recipeTitleNode: HTMLHeadingElement;
+    private preparationPictureNode: HTMLElement;
     private ingredientListNode: HTMLElement;
 
     constructor(game: Game) {
@@ -33,6 +34,7 @@ export class RecipeCookingScene extends Scene {
         this.timerNode = null;
         this.doneButtonNode = null;
         this.recipeTitleNode = null;
+        this.preparationPictureNode = null;
         this.ingredientListNode = null;
 
         this.createRootElement();
@@ -95,6 +97,7 @@ export class RecipeCookingScene extends Scene {
         // Drop zone
         const ingredientDropZone = document.createElement("div");
         ingredientDropZone.classList.add("ingredient-drop-zone");
+        cookingSpace.append(ingredientDropZone);
 
         interact(ingredientDropZone).dropzone({
             accept: ".ingredient",
@@ -113,7 +116,12 @@ export class RecipeCookingScene extends Scene {
             },
         });
 
-        cookingSpace.append(ingredientDropZone);    
+        // Preparation picture
+        const preparationPicture = document.createElement("div");
+        preparationPicture.classList.add("preparation-picture");
+        ingredientDropZone.append(preparationPicture);
+
+        this.preparationPictureNode = preparationPicture;
     }
 
     private createIngredientList(): void {
@@ -133,6 +141,11 @@ export class RecipeCookingScene extends Scene {
         const timerString = `${minutesString}:${secondsString}`;
 
         this.timerNode.innerText = timerString;
+    }
+
+    private updatePreparationPicture(): void {
+        const recipeName = this.game.currentPreparation.targetRecipe.name;
+        this.preparationPictureNode.setAttribute("data-recipe", recipeName);
     }
 
     private updateIngredientList(): void {
@@ -184,12 +197,13 @@ export class RecipeCookingScene extends Scene {
     }
 
     beforeMount(): void {
-        // Update the title
+        // Update the title bar
         const preparationName = this.game.currentPreparation.targetRecipe.name;
         this.recipeTitleNode.innerText = preparationName;
-
-        // Update the done button
         this.updateDoneButton();
+
+        // Update the cooking space
+        this.updatePreparationPicture();
 
         // Update the list of ingredients
         this.updateIngredientList();

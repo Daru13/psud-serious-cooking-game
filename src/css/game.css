@@ -154,6 +154,13 @@ html, body, #game-container, .scene {
     border-color: #D44;
 }
 
+#recipe-cooking .cooking-space .preparation-picture {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
 #recipe-cooking .ingredient-list {
     grid-area: ingredient-list;
     height: 25vh;
