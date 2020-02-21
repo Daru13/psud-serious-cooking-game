@@ -238,6 +238,16 @@ html, body, #game-container, .scene {
     height: 100%;
 }
 
+#recipe-evaluation .comment-section .reward {
+    margin: 5vh;
+    font-size: 5rem;
+    text-align: center;
+}
+
+#recipe-evaluation .comment-section .reward::after {
+    content: " coins";
+}
+
 #recipe-evaluation .action-bar {
     grid-area: action-bar;
     display: flex;
@@ -288,4 +298,19 @@ html, body, #game-container, .scene {
 
 *[data-ingredient="Ingredient E"] {
     background-color: purple;
+}
+
+
+
+/**********************************************************/
+/* Recipes
+/**********************************************************/
+
+
+*[data-recipe="Recipe 1"] {
+    background-image: url("../img/recipes/recipe1.jpg");
+}
+
+*[data-recipe="Recipe 2"] {
+    background-image: url("../img/recipes/recipe2.jpg");
 }

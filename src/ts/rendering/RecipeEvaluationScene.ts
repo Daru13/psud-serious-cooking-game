@@ -4,6 +4,8 @@ import { Preparation } from '../data/Preparation';
 import { EventManager } from '../events/EventManager';
 import { DisplayTitleScreenEvent } from '../events/DisplayTitleScreenEvent';
 import { StartCookingEvent } from '../events/StartCookingEvent';
+import { emptyElement } from '../utils/DOMUtils';
+import { IngredientEffectType } from '../data/Recipe';
 
 export class RecipeEvaluationScene extends Scene {
     static id: SceneID = "recipe-evaluation";
@@ -12,6 +14,9 @@ export class RecipeEvaluationScene extends Scene {
     private preparation: Preparation;
 
     private recipeTitleNode: HTMLElement;
+    private dishPictureNode: HTMLElement;
+    private rewardNode: HTMLElement;
+    private commentListNode: HTMLUListElement;
 
     constructor(game: Game) {
         super(game);
@@ -19,6 +24,9 @@ export class RecipeEvaluationScene extends Scene {
         this.preparation = null;
 
         this.recipeTitleNode = null;
+        this.dishPictureNode = null;
+        this.rewardNode = null;
+        this.commentListNode = null;
 
         this.createRootElement();
     }
@@ -48,13 +56,26 @@ export class RecipeEvaluationScene extends Scene {
     private createDishPicture(): void {
         const dishPicture = document.createElement("div");
         dishPicture.classList.add("dish-picture");
-        this.root.append(dishPicture);  
+        this.root.append(dishPicture);
+
+        this.dishPictureNode = dishPicture;
     }
 
     private createCommentSection(): void {
         const commentSection = document.createElement("div");
         commentSection.classList.add("comment-section");
-        this.root.append(commentSection); 
+        this.root.append(commentSection);
+
+        const reward = document.createElement("div");
+        reward.classList.add("reward");
+        commentSection.append(reward);
+
+        const commentList = document.createElement("ul");
+        commentList.classList.add("comment-list");
+        commentSection.append(commentList);
+
+        this.rewardNode = reward;
+        this.commentListNode = commentList;
     }
 
     private createActionBar(): void {
@@ -82,15 +103,41 @@ export class RecipeEvaluationScene extends Scene {
         actionBar.append(recipeListButton);
     }
 
+    private updateReward(): void {
+        const reward = this.game.currentPreparation.computeReward();
+        this.rewardNode.innerText = reward.toString();
+    }
+
+    private updateComments(): void {
+        const triggeredEffects = this.game.currentPreparation.getTriggeredEffects();
+
+        emptyElement(this.commentListNode);
+        for (let effect of triggeredEffects) {
+            if (effect.reason === undefined) {
+                continue;
+            }
+
+            const commentType = effect.type === IngredientEffectType.Positive ? "positive"
+                              : effect.type === IngredientEffectType.Negative ? "negative"
+                              : "neutral";
+
+            const comment = document.createElement("li");
+            comment.classList.add("comment", commentType);
+            comment.innerText = effect.reason;
+            this.commentListNode.append(comment);
+        }
+    }
+
     beforeMount(): void {
         // Update the title
         const preparationName = this.game.currentPreparation.targetRecipe.name;
         this.recipeTitleNode.innerText = preparationName;
 
         // Update the dish picture
-        // TODO
+        this.dishPictureNode.setAttribute("data-recipe", this.game.currentPreparation.targetRecipe.name);
 
-        // Update the comment
-        // TODO
+        // Update the reward and the comments
+        this.updateReward();
+        this.updateComments();
     }
 }
