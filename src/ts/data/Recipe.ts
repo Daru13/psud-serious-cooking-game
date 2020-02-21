@@ -38,7 +38,11 @@ export class Recipe {
 
     readonly requiredIngredientNames: Set<IngredientName>;
     readonly optionalIngredientNames: Set<IngredientName>;
+
     readonly ingredientEffects: IngredientEffect[];
+    readonly positiveIngredientEffects: IngredientEffect[];
+    readonly negativeIngredientEffects: IngredientEffect[];
+    readonly neutralIngredientEffects: IngredientEffect[];
     
     private constructor(name: RecipeName,
                         category: RecipeCategory,
@@ -52,7 +56,11 @@ export class Recipe {
 
         this.requiredIngredientNames = requiredIngredientNames;
         this.optionalIngredientNames = optionalIngredientNames;
+
         this.ingredientEffects = ingredientEffects;
+        this.positiveIngredientEffects = ingredientEffects.filter(effect => effect.type === IngredientEffectType.Positive);
+        this.negativeIngredientEffects = ingredientEffects.filter(effect => effect.type === IngredientEffectType.Negative);
+        this.neutralIngredientEffects = ingredientEffects.filter(effect => effect.type === IngredientEffectType.Neutral);
     }
 
     canContain(ingredientName: IngredientName): boolean {

@@ -1,6 +1,13 @@
-import { Recipe } from './Recipe';
+import { Recipe, IngredientEffect, IngredientEffectType } from './Recipe';
 import { IngredientName } from './Ingredient';
 import { MapCounter, Counts } from '../utils/MapCounter';
+
+export enum PreparationQuality {
+    NotAvailable,
+    Standard, // 50 coins
+    Better,   // 100 coins
+    Perfect   // 200 coins + badge
+}
 
 export class Preparation {
     readonly targetRecipe: Recipe;
@@ -69,5 +76,88 @@ export class Preparation {
         }
 
         return true;
+    }
+
+    private triggersEffect(effect: IngredientEffect) {
+        const mixedIngredientNames = this.mixedIngredientNames
+            .getAllCounts()
+            .map(ingredient => ingredient.key);
+
+            
+        for (let requiredIngredientName of effect.ingredientNames) {
+            if (!mixedIngredientNames.includes(requiredIngredientName)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    getTriggeredEffects(): IngredientEffect[] {
+        return this.targetRecipe.ingredientEffects
+            .filter(effect => this.triggersEffect(effect));
+    }
+
+    computeQuality(): PreparationQuality {
+        if (! this.isFinished()) {
+            return PreparationQuality.NotAvailable;
+        }
+
+        // If there is no positive effect, quality is necessary Standard
+        const recipe = this.targetRecipe;
+
+        if (recipe.positiveIngredientEffects.length === 0) {
+            return PreparationQuality.Standard;
+        }
+
+        const triggeredEffects = this.getTriggeredEffects();
+        let nbPositiveTriggeredEffects = 0;
+        let nbNegativeTriggeredEffects = 0;
+
+        for (let effect of triggeredEffects) {
+            switch (effect.type) {
+                case IngredientEffectType.Positive:
+                    nbPositiveTriggeredEffects += 1;
+                    break;
+                
+                case IngredientEffectType.Negative:
+                    nbNegativeTriggeredEffects += 1;
+                    break;
+            }
+        }
+
+        // If all positive effects and no negative effect are triggered, quality is Perfect
+        if (nbPositiveTriggeredEffects === recipe.positiveIngredientEffects.length
+        &&  nbNegativeTriggeredEffects === 0) {
+            return PreparationQuality.Perfect;
+        }
+
+        // If at least one positive effects and no negative effect is triggered, quality is Better
+        if (nbPositiveTriggeredEffects > 0
+        &&  nbNegativeTriggeredEffects === 0) {
+            return PreparationQuality.Better;
+        }
+
+        // Otherwise, quality is Standard
+        return PreparationQuality.Standard;
+    }
+
+    computeReward(): number {
+        const quality = this.computeQuality();
+
+        switch (quality) {
+            case PreparationQuality.Standard:
+                return 50;
+
+            case PreparationQuality.Better:
+                return 100;
+
+            case PreparationQuality.Perfect:
+                return 200;
+
+            case PreparationQuality.NotAvailable:
+            default:
+                return 0;
+        }
     }
 }
