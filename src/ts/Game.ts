@@ -14,15 +14,15 @@ import { RecipeEvaluationScene } from './rendering/RecipeEvaluationScene';
 
 export class Game {
     readonly data: GameData;
-    private renderer: Renderer;
-    private progress: PlayerProgress;
+    readonly progress: PlayerProgress;
     currentPreparation: Preparation;
+    private renderer: Renderer;
 
     constructor() {
         this.data = new GameData();
-        this.renderer = new Renderer(this);
         this.progress = PlayerProgress.loadFromLocalStorageOrCreate(this.data);
         this.currentPreparation = null;
+        this.renderer = new Renderer(this);
 
         this.registerAllEventHandlers();
 
@@ -61,6 +61,9 @@ export class Game {
 
         EventManager.registerHandler(FinishCookingEvent, () => {
             console.log("FinishCookingEvent");
+
+            this.progress.logPreparation(this.currentPreparation);
+
             this.renderer.displayScene(RecipeEvaluationScene.id);
         });
     }

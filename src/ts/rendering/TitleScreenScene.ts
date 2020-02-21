@@ -8,21 +8,34 @@ export class TitleScreenScene extends Scene {
     static id: SceneID = "title-screen";
     id: SceneID = TitleScreenScene.id;
 
+    private coinCounterNode: HTMLElement;
+    private trophyCounterNode: HTMLElement;
+
     constructor(game: Game) {
         super(game);
+
+        this.coinCounterNode = null;
+        this.trophyCounterNode = null;
+
         this.createRootElement();
     }
 
     protected createRootElement(): void {
         super.createRootElement();
 
-        // Main title
+        this.createMainTitle();
+        this.createMainMenu();
+        this.createStatsBar();
+    }
+
+    private createMainTitle(): void {
         const title = document.createElement("h1");
         title.textContent = "Serious Cooking Game";
         title.classList.add("main-title");
         this.root.append(title);
+    }
 
-        // Main menu
+    private createMainMenu(): void {
         const menu = document.createElement("div");
         menu.classList.add("main-menu");
         this.root.append(menu);
@@ -43,5 +56,38 @@ export class TitleScreenScene extends Scene {
             EventManager.emit(new DisplayRecipeListEvent());
         });
         menu.append(recipeListButton);
+    }
+
+    private createStatsBar(): void {
+        const statsBar = document.createElement("div");
+        statsBar.classList.add("stats-bar");
+        this.root.append(statsBar);
+
+        const coinCounter = document.createElement("div");
+        coinCounter.classList.add("coin-counter");
+        statsBar.append(coinCounter);
+
+        const trophyCounter = document.createElement("div");
+        trophyCounter.classList.add("trophy-counter");
+        statsBar.append(trophyCounter);
+
+        this.coinCounterNode = coinCounter;
+        this.trophyCounterNode = trophyCounter;
+    }
+
+    private updateCounters(): void {
+        const progress = this.game.progress;
+
+        this.coinCounterNode.innerText = progress
+            .getNbCoins()
+            .toFixed(0);
+
+        this.trophyCounterNode.innerText = progress
+            .getNbTrophies()
+            .toFixed(0);
+    }
+
+    beforeMount(): void {
+        this.updateCounters();
     }
 }
