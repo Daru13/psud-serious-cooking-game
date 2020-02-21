@@ -82,7 +82,7 @@ html, body, #game-container, .scene {
 }
 
 #title-screen .stats-bar .trophy-counter::after {
-    content: " trophies";
+    content: " 🏆";
 }
 
 
