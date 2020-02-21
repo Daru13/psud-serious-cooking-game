@@ -248,6 +248,29 @@ html, body, #game-container, .scene {
     content: " coins";
 }
 
+#recipe-evaluation .comment-section .comment {
+    display: block;
+    margin: 2.5vh;
+    padding: 5vh;
+    font-size: 1.5rem;
+    list-style-type: none;
+}
+
+#recipe-evaluation .comment-section .comment.positive {
+    background-color: darkgreen;
+    color: #FFF;
+}
+
+#recipe-evaluation .comment-section .comment.negative {
+    background-color: darkred;
+    color: #FFF;
+}
+
+#recipe-evaluation .comment-section .comment.neutral {
+    background-color: #666;
+    color: #FFF;
+}
+
 #recipe-evaluation .action-bar {
     grid-area: action-bar;
     display: flex;
