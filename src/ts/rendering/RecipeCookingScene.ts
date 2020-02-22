@@ -112,9 +112,6 @@ export class RecipeCookingScene extends Scene {
             ondrop: () => {
                 const ingredientName = this.draggedIngredientName;
                 this.draggedIngredientName = null;
-                
-                document.body.removeChild(this.draggedIngredientNode);
-                this.draggedIngredientNode = null;
 
                 ingredientDropZone.classList.remove("drop-enabled");
     
@@ -186,6 +183,11 @@ export class RecipeCookingScene extends Scene {
 
                     move: (event: MouseEvent) => {
                         this.updateDraggedIngredient(event);
+                    },
+
+                    end: () => {
+                        document.body.removeChild(this.draggedIngredientNode);
+                        this.draggedIngredientNode = null;
                     }
                 }
             })
