@@ -22,6 +22,7 @@ export class RecipeCookingScene extends Scene {
     private recipeTitleNode: HTMLHeadingElement;
     private preparationPictureNode: HTMLElement;
     private ingredientListNode: HTMLElement;
+    private draggedIngredientNode: HTMLElement;
 
     constructor(game: Game) {
         super(game);
@@ -35,6 +36,7 @@ export class RecipeCookingScene extends Scene {
         this.recipeTitleNode = null;
         this.preparationPictureNode = null;
         this.ingredientListNode = null;
+        this.draggedIngredientNode = null;
 
         this.createRootElement();
     }
@@ -101,11 +103,18 @@ export class RecipeCookingScene extends Scene {
         interact(ingredientDropZone).dropzone({
             accept: ".ingredient",
 
-            ondragenter: () => { ingredientDropZone.classList.add("drop-enabled"); },
+            ondragenter: () => {
+                if (! this.game.currentPreparation.contains(this.draggedIngredientName)) {
+                    ingredientDropZone.classList.add("drop-enabled");
+                }
+            },
             ondragleave: () => { ingredientDropZone.classList.remove("drop-enabled"); },
             ondrop: () => {
                 const ingredientName = this.draggedIngredientName;
                 this.draggedIngredientName = null;
+                
+                document.body.removeChild(this.draggedIngredientNode);
+                this.draggedIngredientNode = null;
 
                 ingredientDropZone.classList.remove("drop-enabled");
     
@@ -161,12 +170,22 @@ export class RecipeCookingScene extends Scene {
             
             interact(ingredient).draggable({
                 listeners: {
-                    start: () => {
+                    start: (event: MouseEvent) => {
+                        const alreadyUsed = this.game.currentPreparation.contains(ingredientName);
                         this.draggedIngredientName = ingredientName;
+
+                        const draggedIngredient = document.createElement("div");
+                        draggedIngredient.classList.add("dragged-ingredient");
+                        draggedIngredient.classList.toggle("already-used", alreadyUsed);
+                        draggedIngredient.setAttribute("data-ingredient", ingredientName);
+                        document.body.append(draggedIngredient);
+
+                        this.draggedIngredientNode = draggedIngredient;
+                        this.updateDraggedIngredient(event);
                     },
 
-                    move(event) {
-                        // TODO
+                    move: (event: MouseEvent) => {
+                        this.updateDraggedIngredient(event);
                     }
                 }
             })
@@ -189,6 +208,14 @@ export class RecipeCookingScene extends Scene {
 
         const alreadyUsed = this.game.currentPreparation.contains(ingredientName);
         ingredient.classList.toggle("already-used", alreadyUsed);
+    }
+
+    private updateDraggedIngredient(event: MouseEvent): void {
+        const draggedIngredient = this.draggedIngredientNode;
+
+        const boundingBox = draggedIngredient.getBoundingClientRect();
+        draggedIngredient.style.top = `${Math.round(event.clientY - (boundingBox.height / 2))}px`;
+        draggedIngredient.style.left = `${Math.round(event.clientX - (boundingBox.width / 2))}px`;
     }
 
     private updateDoneButton() {

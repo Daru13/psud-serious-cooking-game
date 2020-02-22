@@ -196,6 +196,7 @@ html, body, #game-container, .scene {
 }
 
 #recipe-cooking .ingredient-list .ingredient {
+    position: relative;
     display: inline-block;
     width: 20vh;
     height: 20vh;
@@ -212,10 +213,37 @@ html, body, #game-container, .scene {
     opacity: 0.5;
 }
 
-#recipe-cooking .ingredient-list .ingredient.already-used:hover,
-#recipe-cooking .ingredient-list .ingredient.already-used:active {
-    background-color: red;
+#recipe-cooking .ingredient-list .ingredient.already-used::after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 1;
 }
+
+#recipe-cooking .ingredient-list .ingredient.already-used:hover::after {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path fill="red" d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+}
+
+.dragged-ingredient {
+    position: fixed;
+    top: 0; /* Set in JavaScript */
+    left: 0; /* Set in JavaScript */
+    width: 20vh;
+    height: 20vh;
+    z-index: 100;
+}
+
+.dragged-ingredient.already-used {
+    display: none;
+}
+
 
 
 /**********************************************************/
