@@ -3,6 +3,7 @@ import { Game } from '../Game';
 import { EventManager } from '../events/EventManager';
 import { RecipeCategory, RecipeName, Recipe } from '../data/Recipe';
 import { DisplayTitleScreenEvent } from '../events/DisplayTitleScreenEvent';
+import { StartCookingEvent } from '../events/StartCookingEvent';
 
 export class RecipeListScene extends Scene {
     static id: SceneID = "recipe-list";
@@ -87,6 +88,9 @@ export class RecipeListScene extends Scene {
 
         const recipeItemButton = document.createElement("button");
         recipeItemButton.innerText = recipe.name;
+        recipeItemButton.addEventListener("click", () => {
+            EventManager.emit(new StartCookingEvent(recipe));
+        });
         recipeItem.append(recipeItemButton);
 
         this.recipeItemNodes.set(recipe.name, recipeItem);
