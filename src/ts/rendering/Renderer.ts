@@ -3,6 +3,7 @@ import { TitleScreenScene } from './TitleScreenScene';
 import { Game } from '../Game';
 import { RecipeCookingScene } from './RecipeCookingScene';
 import { RecipeEvaluationScene } from './RecipeEvaluationScene';
+import { RecipeListScene } from './RecipeListScene';
 
 export class Renderer {
     private static readonly CONTAINER_ID = "game-container";
@@ -32,6 +33,7 @@ export class Renderer {
     private initScenes(): void {
         const scenes = [
             new TitleScreenScene(this.game),
+            new RecipeListScene(this.game),
             new RecipeCookingScene(this.game),
             new RecipeEvaluationScene(this.game),
         ];

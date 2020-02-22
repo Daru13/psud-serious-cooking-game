@@ -11,6 +11,7 @@ import { StartCookingEvent } from './events/StartCookingEvent';
 import { FinishCookingEvent } from './events/FinishCookingEvent';
 import { RecipeCookingScene } from './rendering/RecipeCookingScene';
 import { RecipeEvaluationScene } from './rendering/RecipeEvaluationScene';
+import { RecipeListScene } from './rendering/RecipeListScene';
 
 export class Game {
     readonly data: GameData;
@@ -45,7 +46,7 @@ export class Game {
         });
 
         EventManager.registerHandler(DisplayRecipeListEvent, () => {
-            // TODO
+            this.renderer.displayScene(RecipeListScene.id);
         });
 
         EventManager.registerHandler(StartCookingEvent, (event: StartCookingEvent) => {

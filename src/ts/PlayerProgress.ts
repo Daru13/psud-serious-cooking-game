@@ -48,20 +48,20 @@ export class PlayerProgress {
         return this.nbCoins;
     }
 
-    getNbTrophies(): number {
+    getRecipeCategoriesWithTrophies(): RecipeCategory[] {
         // Players get one trophy once they have cooked
         // all the recipes of one category with Perfect quality
         const groupedRecipes = this.gameData.getRecipesGroupedByCategory();
 
-        return [...groupedRecipes.values()]
-            .reduce((nbTrophies, group) => {
-                const allGroupedRecipesAreStared = group.every(
-                    (recipe) => this.getRecipeDetails(recipe.name).hasStarBadge
-                );
+        return [...groupedRecipes.entries()]
+            .filter(([_, recipes]) =>
+                recipes.every((recipe) => this.getRecipeDetails(recipe.name).hasStarBadge)
+            )
+            .map(([categoryName, _]) => categoryName);
+    }
 
-                return nbTrophies
-                    + (allGroupedRecipesAreStared ? 1 : 0);
-            }, 0);
+    getNbTrophies(): number {
+        return this.getRecipeCategoriesWithTrophies().length;
     }
 
     getRecipeDetails(recipeName: RecipeName): RecipeDetails {
@@ -78,10 +78,18 @@ export class PlayerProgress {
         return this.recipeDetails.get(recipeName);
     }
 
+    isUnlocked(recipeName: RecipeName): boolean {
+        return this.getRecipeDetails(recipeName).isUnlocked;
+    }
+
     getUnlockedRecipeNames(): RecipeName[] {
         return [...this.recipeDetails.values()]
             .filter(details => details.isUnlocked)
             .map(details => details.recipeName);
+    }
+
+    hasStarBadge(recipeName: RecipeName): boolean {
+        return this.getRecipeDetails(recipeName).hasStarBadge;
     }
 
     getStaredRecipeNames(): RecipeName[] {
