@@ -1,4 +1,28 @@
 /**********************************************************/
+/* Fonts
+/**********************************************************/
+
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Fira Sans Regular'), local('FiraSans-Regular'),
+         url('../fonts/fira-sans-v10-latin-regular.woff2') format('woff2'),
+         url('../fonts/fira-sans-v10-latin-regular.woff') format('woff');
+}
+  
+@font-face {
+    font-family: 'Fira Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Fira Sans Bold'), local('FiraSans-Bold'),
+         url('../fonts/fira-sans-v10-latin-700.woff2') format('woff2'),
+         url('../fonts/fira-sans-v10-latin-700.woff') format('woff');
+}
+
+
+
+/**********************************************************/
 /* General rules
 /**********************************************************/
 
@@ -16,6 +40,7 @@ html, body, #game-container, .scene {
     height: 100%;
     margin: 0;
     padding: 0;
+    font-family: "Fira Sans", "Roboto", sans-serif;
     overflow: hidden;
 }
 

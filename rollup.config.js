@@ -35,6 +35,7 @@ export default {
         {src: "src/css/*", dest: "build/css"},
         {src: "src/js/*", dest: "build/js"},
         {src: "src/img/*", dest: "build/img"},
+        {src: "src/fonts/*", dest: "build/fonts"},
       ]
     })
   ]
