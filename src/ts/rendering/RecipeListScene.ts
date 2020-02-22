@@ -92,7 +92,7 @@ export class RecipeListScene extends Scene {
         this.recipeItemNodes.set(recipe.name, recipeItem);
     }
 
-    private updateCategoryTrophies(): void {
+    private updateCategoryTitles(): void {
         // Remove all trophies
         for (let categoryTitle of this.recipeCategoryTitleNodes.values()) {
             categoryTitle.classList.remove("has-trophy");
@@ -109,15 +109,18 @@ export class RecipeListScene extends Scene {
         }
     }
 
-    private updateRecipeStarBadges(): void {
+    private updateRecipeItems(): void {
         for (let [recipeName, recipeItem] of this.recipeItemNodes.entries()) {
             const hasStarBadge = this.game.progress.hasStarBadge(recipeName);
             recipeItem.classList.toggle("has-star-badge", hasStarBadge);
+
+            const isUnlocked = this.game.progress.isUnlocked(recipeName);
+            recipeItem.querySelector("button").disabled = !isUnlocked;
         }
     }
 
     beforeMount(): void {
-        this.updateCategoryTrophies();
-        this.updateRecipeStarBadges();
+        this.updateCategoryTitles();
+        this.updateRecipeItems();
     }
 }

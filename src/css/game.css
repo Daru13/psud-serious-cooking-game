@@ -239,6 +239,10 @@ html {
     background-color: #DDD;
 }
 
+#recipe-list .recipe-category .recipe-item button:disabled {
+    background-color: #666;
+}
+
 #recipe-list .recipe-category .recipe-item.has-star-badge button::after {
     content: " ";
     position: absolute;
