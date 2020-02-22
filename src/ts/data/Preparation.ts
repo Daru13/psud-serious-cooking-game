@@ -81,11 +81,12 @@ export class Preparation {
     private triggersEffect(effect: IngredientEffect) {
         const mixedIngredientNames = this.mixedIngredientNames
             .getAllCounts()
+            .filter(ingredient => ingredient.count > 0)
             .map(ingredient => ingredient.key);
 
             
         for (let requiredIngredientName of effect.ingredientNames) {
-            if (!mixedIngredientNames.includes(requiredIngredientName)) {
+            if (! mixedIngredientNames.includes(requiredIngredientName)) {
                 return false;
             }
         }
