@@ -14,7 +14,7 @@ script:
   - yarn build
   - mv build deploy
   - touch deploy/.nojekyll
-  - ln deploy/html/index.html deploy/index.html
+  - ln -s deploy/html/index.html deploy/index.html
 
 deploy:
   provider: pages
