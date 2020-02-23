@@ -348,13 +348,9 @@ html {
         "ingredient-list";
     grid-template-rows: 15vh 60vh 25vh;
     grid-template-columns: auto;
+    background-color: #FAFDFE;
     background-image: url("../img/backgrounds/wallpaper-light.png");
     background-repeat: repeat;
-}
-
-#recipe-cooking {
-    display: grid;
-    width: 100%;
 }
 
 #recipe-cooking .title-bar {
@@ -426,6 +422,24 @@ html {
     grid-area: cooking-space;
     width: 100%;
     height: 100%;
+}
+
+#recipe-cooking .cooking-space.error-flash {
+    animation-name: error-flash;
+    animation-duration: 250ms;
+    animation-timing-function: linear;
+}
+
+@keyframes error-flash {
+    0% {
+        background-color: rgba(197, 48, 48, 0);
+    }
+    5% {
+        background-color: rgba(197, 48, 48, 1);
+    }
+    100% {
+        background-color: rgba(197, 48, 48, 0);
+    }
 }
 
 #recipe-cooking .cooking-space .ingredient-drop-zone {
@@ -569,6 +583,7 @@ html {
         "action-bar   action-bar";
     grid-template-rows: 15vh 60vh 25vh;
     grid-template-columns: 40vw 60vw;
+    background-color: #FAFDFE;
     background-image: url("../img/backgrounds/wallpaper-light.png");
     background-repeat: repeat;
 }

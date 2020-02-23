@@ -20,6 +20,7 @@ export class RecipeCookingScene extends Scene {
     private timerNode: HTMLElement;
     private doneButtonNode: HTMLButtonElement;
     private recipeTitleNode: HTMLHeadingElement;
+    private cookingSpaceNode: HTMLElement;
     private preparationPictureNode: HTMLElement;
     private ingredientListNode: HTMLElement;
     private draggedIngredientNode: HTMLElement;
@@ -34,6 +35,7 @@ export class RecipeCookingScene extends Scene {
         this.timerNode = null;
         this.doneButtonNode = null;
         this.recipeTitleNode = null;
+        this.cookingSpaceNode = null;
         this.preparationPictureNode = null;
         this.ingredientListNode = null;
         this.draggedIngredientNode = null;
@@ -115,7 +117,16 @@ export class RecipeCookingScene extends Scene {
 
                 ingredientDropZone.classList.remove("drop-enabled");
     
-                this.game.currentPreparation.use(ingredientName);
+                const success = this.game.currentPreparation.use(ingredientName);
+                if (! success) {
+                    const delayBeforeRemoval = 300; // ms
+
+                    this.cookingSpaceNode.classList.add("error-flash");
+                    window.setTimeout(() => {
+                        this.cookingSpaceNode.classList.remove("error-flash");
+                    }, delayBeforeRemoval);
+                }
+
                 this.updateIngredient(ingredientName);
                 this.updateMixedIngredientsCount();
                 this.updateDoneButton();
@@ -127,6 +138,7 @@ export class RecipeCookingScene extends Scene {
         preparationPicture.classList.add("preparation-picture");
         ingredientDropZone.append(preparationPicture);
 
+        this.cookingSpaceNode = cookingSpace;
         this.preparationPictureNode = preparationPicture;
     }
 
