@@ -106,7 +106,7 @@ html {
     width: 100%;
     margin: 0 0 2.5vh 0;
     padding: 1rem 1.5rem;
-    background-color: #FFF;
+    background-color: #F7FAFC;
     border: none;
     font-size: 2rem;
 }
@@ -116,7 +116,7 @@ html {
 }
 
 #title-screen .main-menu button:hover {
-    background-color: #DDD;
+    background-color: #CBD5E0;
 }
 
 #title-screen .stats-bar {
@@ -187,19 +187,25 @@ html {
 }
 
 #recipe-list .title-bar .title-screen-button {
-    background-color: #44D;
+    width: 10%;
+    background-color: #3182CE;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path fill="white" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     border: none;
-    color: #FFF;
+    color: transparent;
     font-size: 2rem;
 }
 
+
 #recipe-list .title-bar .title-screen-button:hover {
-    background-color: #11B;
+    background-color: #2C5282;
 }
 
 #recipe-list .title {
     width: 100%;
-    margin: 0;
+    margin: 0 0 0 -5%;
     padding: 0;
     font-size: 2.5rem;
     text-align: center;
@@ -258,17 +264,17 @@ html {
     width: 100%;
     height: 100%;
     padding: 1rem 1.5rem;
-    background-color: #FFF;
+    background-color: #F7FAFC;
     border: none;
     font-size: 2rem;
 }
 
 #recipe-list .recipe-category .recipe-item button:hover {
-    background-color: #DDD;
+    background-color: #CBD5E0;
 }
 
 #recipe-list .recipe-category .recipe-item button:disabled {
-    background-color: #666;
+    background-color: #718096;
 }
 
 #recipe-list .recipe-category .recipe-item.has-star-badge button::after {
@@ -337,23 +343,38 @@ html {
     color: #FFF;
 }
 
-#recipe-cooking .title-bar .title-screen-button,
-#recipe-cooking .title-bar .done-button {
-    background-color: #44D;
-    border: none;
-    color: #FFF;
+#recipe-cooking .title-bar button {
+    background-color: #3182CE;
     font-size: 2rem;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    color: transparent;
 }
 
-#recipe-cooking .title-bar .title-screen-button:hover,
-#recipe-cooking .title-bar .title-screen-button:active,
-#recipe-cooking .title-bar .done-button:hover,
-#recipe-cooking .title-bar .done-button:active {
-    background-color: #11B;
+#recipe-cooking .title-bar button:hover,
+#recipe-cooking .title-bar button:active {
+    background-color: #2C5282;
 }
 
 #recipe-cooking .title-bar .title-screen-button {
     width: 10%;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path fill="white" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+}
+
+#recipe-cooking .title-bar .done-button {
+    width: 10%;
+    background-color: #38A169;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path fill="white" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>');
+}
+
+#recipe-cooking .title-bar .done-button:hover {
+    background-color: #276749;
+}
+
+#recipe-cooking .title-bar .done-button:disabled {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path fill="lightgrey" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/></svg>');
 }
 
 #recipe-cooking .title-bar .recipe-title {
@@ -367,14 +388,11 @@ html {
 }
 
 #recipe-cooking .title-bar .timer {
+    min-width: 5vw;
     margin: 0 2rem 0 0;
     font-size: 2.5rem;
     line-height: 15vh;
     vertical-align: middle;
-}
-
-#recipe-cooking .title-bar .done-button {
-    width: 10%;
 }
 
 #recipe-cooking .title-bar .done-button:disabled {
@@ -392,7 +410,7 @@ html {
     height: calc(100% - 40px);
     margin: 20px;
     border: none;
-    /* border: 4px dashed #44D; */
+    /* border: 4px dashed #3182CE; */
 }
 
 #recipe-cooking .cooking-space .ingredient-drop-zone.drop-enabled {
@@ -559,7 +577,7 @@ html {
     grid-area: dish-picture;
     width: 100%;
     height: 100%;
-    background-size: 100%;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
 }
@@ -595,17 +613,17 @@ html {
 }
 
 #recipe-evaluation .comment-section .comment.positive {
-    background-color: darkgreen;
+    background-color: #276749;
     color: #FFF;
 }
 
 #recipe-evaluation .comment-section .comment.negative {
-    background-color: darkred;
+    background-color: #9C4221;
     color: #FFF;
 }
 
 #recipe-evaluation .comment-section .comment.neutral {
-    background-color: #666;
+    background-color: #4A5568;
     color: #FFF;
 }
 
@@ -624,10 +642,13 @@ html {
     width: calc(50% - 5vh);
     padding: 5vh;
     margin:  0 2.5vh 0 0;
-    background-color: #44D;
+    background-color: #3182CE;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
     border: none;
     font-size: 2rem;
-    color: #FFF;
+    color: transparent;
 }
 
 #recipe-evaluation .action-bar > button:last-child {
@@ -636,9 +657,16 @@ html {
 
 #recipe-evaluation .action-bar > button:hover,
 #recipe-evaluation .action-bar > button:active {
-    background-color: #11B;
+    background-color: #2C5282;
 }
 
+#recipe-evaluation .action-bar .title-screen-button {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path fill="white" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+}
+
+#recipe-evaluation .action-bar .next-recipe-button {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path fill="white" d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+}
 
 @media only screen and (max-width: 768px) {
     #recipe-evaluation .title-bar .recipe-title {
