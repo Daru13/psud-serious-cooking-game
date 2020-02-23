@@ -80,32 +80,18 @@ export class Recipe {
     }
 
     canContain(ingredientName: IngredientName, mixedIngredients: IngredientName[]): boolean {
-        const otherMixedIngredients = mixedIngredients.slice();
-        const ingredientIndex = otherMixedIngredients.indexOf(ingredientName);
-        if (ingredientIndex >= 0) {
-            otherMixedIngredients.splice(ingredientIndex, 1);
+        if (this.requiredIngredientNames.has(ingredientName)
+        ||  this.optionalIngredientNames.has(ingredientName)) {
+            return true;
         }
 
-        // A recipe can only contain at most one ingredient of each alternative
-        let isInAtLeastOneAlternative = false;
-
         for (let alternative of this.requiredIngredientAlternatives) {
-            if (! alternative.has(ingredientName)) {
-                continue;
-            }
-            
-            isInAtLeastOneAlternative = true;
-            
-            for (let otherMixedIngredientName of otherMixedIngredients) {
-                if (alternative.has(otherMixedIngredientName)) {
-                    return false;
-                }
+            if (alternative.has(ingredientName)) {
+                return true;
             }
         }
         
-        return this.requiredIngredientNames.has(ingredientName)
-            || this.optionalIngredientNames.has(ingredientName)
-            || isInAtLeastOneAlternative;
+        return false;
     }
 
     static fromSerialisedRecipe(obj: SerialisedRecipe): Recipe {
