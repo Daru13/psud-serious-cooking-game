@@ -1,8 +1,5 @@
 {
     "ingredients": [
-        { "name": "Ingredient A" },
-        { "name": "Ingredient B" },
-        { "name": "Ingredient C" },
         { "name": "Greek Yogurt" },
         { "name": "Dried Fruit" },
         { "name": "Fresh Berries" },
@@ -25,26 +22,6 @@
     ],
 
     "recipes": [
-        {
-            "name": "Recipe 1",
-            "category": "Breakfast",
-            "level": 1,
-            "container": "BOWL",
-            "requiredIngredientNames": ["Ingredient A"],
-            "optionalIngredientNames": ["Ingredient B", "Ingredient C"],
-            "ingredientEffects": [
-                {
-                    "ingredientNames": ["Ingredient B"],
-                    "type": "POSITIVE",
-                    "reason": "Ingredient B has very little sugar, that's a good choice!"
-                },
-                {
-                    "ingredientNames": ["Ingredient B", "Ingredient C"],
-                    "type": "NEGATIVE",
-                    "reason": "Ingredient C has a lot of palm oil inside, which is bad for health. Ingredient B alone is sweet enough for this recipe!"
-                }
-            ]
-        },
         {
             "name": "Yogurt Bowl",
             "category": "Healthy Snacks",
