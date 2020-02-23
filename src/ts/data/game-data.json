@@ -1,0 +1,158 @@
+{
+    "ingredients": [
+        { "name": "Ingredient A" },
+        { "name": "Ingredient B" },
+        { "name": "Ingredient C" },
+        { "name": "Greek Yogurt" },
+        { "name": "Dried Fruit" },
+        { "name": "Fresh Berries" },
+        { "name": "Honey" },
+        { "name": "Granola" },
+        { "name": "Chicken" },
+        { "name": "Whole-grain Bread" },
+        { "name": "White Bread" },
+        { "name": "Avocado" },
+        { "name": "Salt" },
+        { "name": "Bacon" },
+        { "name": "Egg" },
+        { "name": "Chocolate" },
+        { "name": "Spinach" },
+        { "name": "Iceberg Lettuce" },
+        { "name": "Balsamic Vinegar" },
+        { "name": "Caesar Dressing" },
+        { "name": "Broccoli" },
+        { "name": "Bell Peppers" }
+    ],
+
+    "recipes": [
+        {
+            "name": "Recipe 1",
+            "category": "Breakfast",
+            "level": 1,
+            "container": "BOWL",
+            "requiredIngredientNames": ["Ingredient A"],
+            "optionalIngredientNames": ["Ingredient B", "Ingredient C"],
+            "ingredientEffects": [
+                {
+                    "ingredientNames": ["Ingredient B"],
+                    "type": "POSITIVE",
+                    "reason": "Ingredient B has very little sugar, that's a good choice!"
+                },
+                {
+                    "ingredientNames": ["Ingredient B", "Ingredient C"],
+                    "type": "NEGATIVE",
+                    "reason": "Ingredient C has a lot of palm oil inside, which is bad for health. Ingredient B alone is sweet enough for this recipe!"
+                }
+            ]
+        },
+        {
+            "name": "Yogurt Bowl",
+            "category": "Healthy Snacks",
+            "level": 1,
+            "container": "BOWL",
+            "requiredIngredientNames": ["Greek Yogurt"],
+            "optionalIngredientNames": ["Dried Fruit", "Fresh Berries", "Honey", "Granola"],
+            "ingredientEffects": [
+                {
+                    "ingredientNames": ["Granola", "Honey"],
+                    "type": "NEGATIVE",
+                    "reason": "Granola or Honey are good yogurt additions on their own, but Granola has sweeteners already added, so having both is a bit too much sugar!"
+                },
+                {
+                    "ingredientNames": ["Dried Fruit"],
+                    "type": "NEGATIVE",
+                    "reason": "Dried Fruit is very calorie dense and sugary, stick to the fresh fruit!"
+                },
+                {
+                    "ingredientNames": ["Fresh Berries"],
+                    "type": "POSITIVE",
+                    "reason": "Fresh Berries are a great choice! Antioxidants and nutrients, yum!"
+                },
+                {
+                    "ingredientNames": ["Honey"],
+                    "type": "NEUTRAL",
+                    "reason": "Honey is a great natural sweetener, but don't add too much!"
+                }
+            ]
+        },
+
+        {
+            "name": "Avocado Toast",
+            "category": "Healthy Snacks",
+            "level": 1,
+            "container": "PLATE",
+            "requiredIngredientNames": [["Whole-grain Bread", "White Bread"], "Avocado"], 
+            "optionalIngredientNames": ["Salt", "Bacon", "Egg", "Chocolate", "White Bread", "Whole-grain Bread"],
+            "ingredientEffects": [
+                {
+                    "ingredientNames": ["Whole-grain Bread"],
+                    "type": "POSITIVE",
+                    "reason": "Whole-grain is an awesome choice of Bread!"
+                },
+                {
+                    "ingredientNames": ["White Bread"],
+                    "type": "NEGATIVE",
+                    "reason": "White Bread is low in nutrients, go with whole-grain instead!"
+                },
+                {
+                    "ingredientNames": ["Bacon"],
+                    "type": "NEGATIVE",
+                    "reason": "Bacon is fatty, an egg would be a better source of protein for this snack"
+                },
+                {
+                    "ingredientNames": ["Chocolate"],
+                    "type": "NEGATIVE",
+                    "reason": "Using Chocolate here is just added sugar! (and a bit weird)"
+                },
+                {
+                    "ingredientNames": ["Salt"],
+                    "type": "NEUTRAL",
+                    "reason": "A pinch of Salt can make this snack tasty, just don't add too much!"
+                }
+            ]
+        },
+
+        {
+            "name": "Small Salad",
+            "category": "Healthy Snacks",
+            "level": 1,
+            "container": "BOWL",
+            "requiredIngredientNames": [["Spinach","Iceberg Lettuce"], ["Balsamic Vinegar","Caesar Dressing"]],
+            "optionalIngredientNames": ["Balsamic Vinegar", "Caesar Dressing", "Broccoli", "Bell Peppers", "Spinach", "Iceberg Lettuce", "Bacon"],
+            "ingredientEffects": [
+                {
+                    "ingredientNames": ["Spinach"],
+                    "type": "POSITIVE",
+                    "reason": "Spinach is great in salads! Rich in vitamins and tasty!"
+                },
+                {
+                    "ingredientNames": ["Broccoli"],
+                    "type": "POSITIVE",
+                    "reason": "Broccoli is an amazing choice, lots of fiber and minerals!"
+                },
+                {
+                    "ingredientNames": ["Bell Peppers"],
+                    "type": "POSITIVE",
+                    "reason": "Vitamin C and antioxidants make Bell Peppers a tasty and healthy salad topping!"
+                },
+                {
+                    "ingredientNames": ["Caesar Dressing"],
+                    "type": "NEGATIVE",
+                    "reason": "Caesar Dressing is fatty! Simple Balsamic Vinegar is a tasty and healthy salad dressing."
+                },
+                {
+                    "ingredientNames": ["Bacon"],
+                    "type": "NEGATIVE",
+                    "reason": "Bacon is fatty! Avoid adding to your healthy snack."
+                },
+                {
+                    "ingredientNames": ["Iceberg Lettuce"],
+                    "type": "NEUTRAL",
+                    "reason": "Iceberg Lettuce isn't bad, but it's mostly water. Be sure to add some dark-green veggies like Spinach, which is packed with nutrients!"
+                }
+            ]
+        }
+    ],
+
+    "initiallyAvailableRecipes": ["Yogurt Bowl", "Avocado Toast", "Small Salad"]
+}

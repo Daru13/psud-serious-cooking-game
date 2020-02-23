@@ -1,4 +1,4 @@
-import * as gameDataJSON from "./GameData.json";
+import * as gameDataJSON from "./game-data.json";
 
 import { Ingredient } from './Ingredient';
 import { Recipe, RecipeName, RecipeCategory } from './Recipe';
@@ -12,7 +12,7 @@ export class GameData {
         this.ingredients = Array.from(gameDataJSON.ingredients)
             .map(Ingredient.fromSerialisedIngredient);
         this.recipes = Array.from(gameDataJSON.recipes)
-            .map(Recipe.fromSerialisedRecipe);
+            .map(Recipe.fromSerialisedRecipe as any);
         this.initiallyAvailableRecipeNames = gameDataJSON.initiallyAvailableRecipes;
     }
 

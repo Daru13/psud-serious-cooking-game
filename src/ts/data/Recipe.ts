@@ -4,6 +4,11 @@ export type RecipeName = string;
 export type RecipeCategory = string;
 export type RecipeLevel = number;
 
+export enum RecipeContainer {
+    Plate = "PLATE",
+    Bowl = "BOWL"
+}
+
 export enum IngredientEffectType {
     Positive = "POSITIVE",
     Neutral = "NEUTRAL",
@@ -20,8 +25,8 @@ interface SerialisedRecipe {
     name: string;
     category: string;
     level: number;
-    requiredIngredientNames: string[];
-    requiredIngredientAlternatives: string[];
+    container: RecipeContainer;
+    requiredIngredientNames: (string | string[])[];
     optionalIngredientNames: string[];
     ingredientEffects: SerialisedIngredientEffect[];
 }
@@ -36,6 +41,7 @@ export class Recipe {
     readonly name: RecipeName;
     readonly category: RecipeCategory;
     readonly level: RecipeLevel;
+    readonly container: RecipeContainer;
 
     readonly requiredIngredientNames: Set<IngredientName>;
     readonly requiredIngredientAlternatives: Set<Set<IngredientName>>;
@@ -49,6 +55,7 @@ export class Recipe {
     private constructor(name: RecipeName,
                         category: RecipeCategory,
                         level: RecipeLevel,
+                        container: RecipeContainer,
                         requiredIngredientNames: Set<IngredientName>,
                         requiredIngredientAlternatives: Set<Set<IngredientName>>,
                         optionalIngredientNames: Set<IngredientName>,
@@ -56,6 +63,7 @@ export class Recipe {
         this.name = name;
         this.category = category;
         this.level = level;
+        this.container = container;
 
         this.requiredIngredientNames = requiredIngredientNames;
         this.requiredIngredientAlternatives = requiredIngredientAlternatives;
@@ -113,15 +121,13 @@ export class Recipe {
             .map(ingredientAlternative =>
                 new Set(ingredientAlternative)
             );
-        
-        console.log(requiredIngredientNames,
-            requiredIngredientAlternatives)
 
         return new Recipe(
             obj.name,
             obj.category,
             obj.level,
-            new Set(requiredIngredientNames),
+            obj.container,
+            new Set(requiredIngredientNames as string[]),
             new Set(requiredIngredientAlternatives),
             new Set(obj.optionalIngredientNames),
             obj.ingredientEffects

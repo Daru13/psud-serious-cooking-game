@@ -12,6 +12,7 @@ import { FinishCookingEvent } from './events/FinishCookingEvent';
 import { RecipeCookingScene } from './rendering/RecipeCookingScene';
 import { RecipeEvaluationScene } from './rendering/RecipeEvaluationScene';
 import { RecipeListScene } from './rendering/RecipeListScene';
+import { IngredientName } from './data/Ingredient';
 
 export class Game {
     readonly data: GameData;
@@ -50,8 +51,14 @@ export class Game {
         });
 
         EventManager.registerHandler(StartCookingEvent, (event: StartCookingEvent) => {
-            const ingredientNames = this.data.ingredients.map(ingredient => ingredient.name);
-            this.currentPreparation = new Preparation(event.recipe, ingredientNames);
+            const ingredientNames = new Set<IngredientName>();
+            event.recipe.requiredIngredientNames.forEach(name => { ingredientNames.add(name); });
+            event.recipe.optionalIngredientNames.forEach(name => { ingredientNames.add(name); });
+            event.recipe.requiredIngredientAlternatives.forEach(alternative => {
+                alternative.forEach(name => { ingredientNames.add(name); });
+            });
+
+            this.currentPreparation = new Preparation(event.recipe, [...ingredientNames.values()]);
 
             this.renderer.displayScene(RecipeCookingScene.id);
         });

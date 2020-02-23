@@ -148,9 +148,9 @@ export class RecipeCookingScene extends Scene {
         this.timerNode.innerText = timerString;
     }
 
-    private updatePreparationPicture(): void {
-        const recipeName = this.game.currentPreparation.targetRecipe.name;
-        this.preparationPictureNode.setAttribute("data-recipe", recipeName);
+    private updateRecipeContainerPicture(): void {
+        const recipeContainer = this.game.currentPreparation.targetRecipe.container;
+        this.preparationPictureNode.setAttribute("data-container", recipeContainer);
     }
 
     private updateIngredientList(): void {
@@ -230,7 +230,7 @@ export class RecipeCookingScene extends Scene {
         this.updateDoneButton();
 
         // Update the cooking space
-        this.updatePreparationPicture();
+        this.updateRecipeContainerPicture();
 
         // Update the list of ingredients
         this.updateIngredientList();

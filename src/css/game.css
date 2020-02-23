@@ -81,6 +81,8 @@ html {
         "main-menu"
         "stats-bar";
     background-color: lightblue;
+    background-image: url("../img/backgrounds/wallpaper.png");
+    background-repeat: repeat;
 }
 
 
@@ -171,7 +173,8 @@ html {
     grid-template-areas:
         "title-bar"
         "list";
-    background-color: lightcoral;
+    background-image: url("../img/backgrounds/wallpaper.png");
+    background-repeat: repeat;
 }
 
 #recipe-list .title-bar {
@@ -316,6 +319,8 @@ html {
         "ingredient-list";
     grid-template-rows: 15vh 60vh 25vh;
     grid-template-columns: auto;
+    background-image: url("../img/backgrounds/wallpaper.png");
+    background-repeat: repeat;
 }
 
 #recipe-cooking {
@@ -403,8 +408,8 @@ html {
 #recipe-cooking .ingredient-list {
     grid-area: ingredient-list;
     height: 25vh;
-    padding: 2.5%;
-    background-color: rgba(0, 0, 0, 0.4);
+    padding: 2.5vh;
+    background-color: #000;
     color: #FFF;
     overflow-x: auto;
     overflow-y: hidden;
@@ -415,13 +420,17 @@ html {
     position: relative;
     display: inline-block;
     width: 20vh;
-    height: 20vh;
-    padding: 5vh;
-    margin: 0 5vh 0 0;
-    font-size: 1.5rem;
-    color: #000;
+    height: 25vh;
+    margin: 0 2.5vh 0 0;
+    padding: 15vh 0 0 0;
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: 15vh;
+    font-size: 1.2rem;
+    color: #FFF;
+    text-align: center;
     word-wrap: break-word;
-    white-space: normal;
+    text-shadow: 0 0 2.5vh #000;
 }
 
 #recipe-cooking .ingredient-list .ingredient:last-child {
@@ -510,6 +519,8 @@ html {
         "action-bar   action-bar";
     grid-template-rows: 15vh 60vh 25vh;
     grid-template-columns: 40vw 60vw;
+    background-image: url("../img/backgrounds/wallpaper.png");
+    background-repeat: repeat;
 }
 
 #recipe-evaluation {
@@ -594,7 +605,7 @@ html {
     display: flex;
     height: 25vh;
     padding: 2.5vh;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: #000;
     color: #000;
 }
 
@@ -683,6 +694,82 @@ html {
     background-color: purple;
 }
 
+*[data-ingredient="Fresh Berries"] {
+    background-image: url("../img/ingredients/01_freshBerries.svg");
+}
+
+*[data-ingredient="Chocolate"] {
+    background-image: url("../img/ingredients/02_chocolate.svg");
+}
+
+*[data-ingredient="Caesar Dressing"] {
+    background-image: url("../img/ingredients/03_cesarDressing.svg");
+}
+
+*[data-ingredient="Broccoli"] {
+    background-image: url("../img/ingredients/04_brocoli.svg");
+}
+
+*[data-ingredient="Chicken"] {
+    background-image: url("../img/ingredients/05_chickenLeg.svg");
+}
+
+*[data-ingredient="Iceberg Lettuce"] {
+    background-image: url("../img/ingredients/06_icebergLettuce.svg");
+}
+
+*[data-ingredient="Granola"] {
+    background-image: url("../img/ingredients/07_granola.svg");
+}
+
+*[data-ingredient="Avocado"] {
+    background-image: url("../img/ingredients/08_avocado.svg");
+}
+
+*[data-ingredient="Honey"] {
+    background-image: url("../img/ingredients/09_honey.svg");
+}
+
+*[data-ingredient="Whole-grain Bread"] {
+    background-image: url("../img/ingredients/10_wholeWheatBread.svg");
+}
+
+*[data-ingredient="White Bread"] {
+    background-image: url("../img/ingredients/11_whiteBread.svg");
+}
+
+*[data-ingredient="Bacon"] {
+    background-image: url("../img/ingredients/12_bacon.svg");
+}
+
+*[data-ingredient="Egg"] {
+    background-image: url("../img/ingredients/14_egg.svg");
+}
+
+*[data-ingredient="Balsamic Vinegar"] {
+    background-image: url("../img/ingredients/15_balsamicVinegar.svg");
+}
+
+*[data-ingredient="Spinach"] {
+    background-image: url("../img/ingredients/16_spinash.svg");
+}
+
+*[data-ingredient="Salt"] {
+    background-image: url("../img/ingredients/17_salt.svg");
+}
+
+*[data-ingredient="Pepper"] {
+    background-image: url("../img/ingredients/18_pepper.svg");
+}
+
+*[data-ingredient="Greek Yogurt"] {
+    background-image: url("../img/ingredients/19_greekYogurt.svg");
+}
+
+*[data-ingredient="Bell Peppers"] {
+    background-image: url("../img/ingredients/22_bellPepper.svg");
+}
+
 
 
 /**********************************************************/
@@ -696,4 +783,30 @@ html {
 
 *[data-recipe="Recipe 2"] {
     background-image: url("../img/recipes/recipe2.jpg");
+}
+
+*[data-recipe="Yogurt Bowl"] {
+    background-image: url("../img/recipes/21_yogurtBowl.svg");
+}
+
+*[data-recipe="Avocado Toast"] {
+    background-image: url("../img/recipes/20_avocadoToast.svg");
+}
+
+*[data-recipe="Small Salad"] {
+    background-image: url("../img/recipes/13_salad.svg");
+}
+
+
+
+/**********************************************************/
+/* Recipe containers
+/**********************************************************/
+
+*[data-container="BOWL"] {
+    background-image: url("../img/containers/bowl.svg");
+}
+
+*[data-container="PLATE"] {
+    background-image: url("../img/containers/plate.svg");
 }
