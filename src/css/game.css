@@ -90,7 +90,7 @@ html {
     display: block;
     width: 100%;
     margin: auto 0;
-    font-size: 4rem;
+    font-size: 6rem;
     text-align: center;
 }
 
@@ -131,17 +131,34 @@ html {
     vertical-align: bottom;
 }
 
+/* Coin icon from https://www.svgrepo.com/svg/2465/coin */
 #title-screen .stats-bar .coin-counter::after {
-    content: " coins";
+    content: " ";
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin: 0 0 0 0.2em;
+    background-image: url('../img/icons/coin.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #title-screen .stats-bar .trophy-counter::after {
-    content: " 🏆";
+    content: " ";
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin: 0 0 0 0.2em;
+    background-image: url('../img/icons/trophy.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 @media only screen and (max-width: 768px) {
     #title-screen .main-title {
-        font-size: 3rem;
+        font-size: 4rem;
     }
 
     #title-screen .stats-bar {
@@ -151,7 +168,7 @@ html {
 
 @media only screen and (max-width: 480px) {
     #title-screen .main-title {
-        font-size: 2rem;
+        font-size: 3rem;
     }
 
     #title-screen .stats-bar {
@@ -235,10 +252,16 @@ html {
 }
 
 #recipe-list .recipe-category .category-title.has-trophy::after {
-    content: "🏆";
+    content: " ";
     position: absolute;
     top: 0;
-    right: 2.5vh;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    background-image: url('../img/icons/trophy.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #recipe-list .recipe-category .recipe-item-list {
@@ -595,8 +618,17 @@ html {
     text-align: center;
 }
 
+/* Coin icon from https://www.svgrepo.com/svg/2465/coin */
 #recipe-evaluation .comment-section .reward::after {
-    content: " coins";
+    content: " ";
+    display: inline-block;
+    width: 0.7em;
+    height: 0.7em;
+    margin: 0 0 0 0.2em;
+    background-image: url('../img/icons/coin.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 #recipe-evaluation .comment-section .comment-list {
