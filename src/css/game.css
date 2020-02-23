@@ -391,11 +391,13 @@ html {
     width: calc(100% - 40px);
     height: calc(100% - 40px);
     margin: 20px;
-    border: 4px dashed #44D;
+    border: none;
+    /* border: 4px dashed #44D; */
 }
 
 #recipe-cooking .cooking-space .ingredient-drop-zone.drop-enabled {
     border-color: #D44;
+    border: 5px dashed rgba(0, 0, 0, 0.5);
 }
 
 #recipe-cooking .cooking-space .preparation-picture {
