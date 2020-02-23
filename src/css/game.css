@@ -674,26 +674,6 @@ html {
 /* Ingredients
 /**********************************************************/
 
-*[data-ingredient="Ingredient A"] {
-    background-color: red;
-}
-
-*[data-ingredient="Ingredient B"] {
-    background-color: blue;
-}
-
-*[data-ingredient="Ingredient C"] {
-    background-color: orange;
-}
-
-*[data-ingredient="Ingredient D"] {
-    background-color: green;
-}
-
-*[data-ingredient="Ingredient E"] {
-    background-color: purple;
-}
-
 *[data-ingredient="Fresh Berries"] {
     background-image: url("../img/ingredients/01_freshBerries.svg");
 }
@@ -770,20 +750,14 @@ html {
     background-image: url("../img/ingredients/22_bellPepper.svg");
 }
 
+*[data-ingredient="Dried Fruit"] {
+    background-image: url("../img/ingredients/24_raisins.svg");
+}
 
 
 /**********************************************************/
 /* Recipes
 /**********************************************************/
-
-
-*[data-recipe="Recipe 1"] {
-    background-image: url("../img/recipes/recipe1.jpg");
-}
-
-*[data-recipe="Recipe 2"] {
-    background-image: url("../img/recipes/recipe2.jpg");
-}
 
 *[data-recipe="Yogurt Bowl"] {
     background-image: url("../img/recipes/21_yogurtBowl.svg");
