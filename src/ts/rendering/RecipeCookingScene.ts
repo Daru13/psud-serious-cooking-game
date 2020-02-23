@@ -199,6 +199,10 @@ export class RecipeCookingScene extends Scene {
                         document.body.removeChild(this.draggedIngredientNode);
                         this.draggedIngredientNode = null;
                     }
+                },
+
+                cursorChecker: (_a, _i, _e, interacting) => {
+                    return interacting ? "grabbing" : "grab";
                 }
             })
             .on("click", () => {
