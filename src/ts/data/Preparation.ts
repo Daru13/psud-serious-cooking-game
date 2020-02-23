@@ -24,10 +24,18 @@ export class Preparation {
         this.rejectedIngredientsCounts = new MapCounter();
     }
 
-    getAllAvailableIngredients(): Counts<IngredientName> {
+    getAllAvailableIngredients(): IngredientName[] {
         return this.availableIngredientsCounts
             .getAllCounts()
-            .filter(ingredient => ingredient.count > 0);
+            .filter(ingredient => ingredient.count > 0)
+            .map(ingredient => ingredient.key);
+    }
+
+    getAllMixedIngredients(): IngredientName[] {
+        return this.mixedIngredientNames
+            .getAllCounts()
+            .filter(ingredient => ingredient.count > 0)
+            .map(ingredient => ingredient.key);
     }
 
     contains(ingredientName: IngredientName): boolean {
@@ -35,7 +43,7 @@ export class Preparation {
     }
 
     private add(ingredientName: IngredientName): boolean {
-        if (! this.targetRecipe.canContain(ingredientName)) {
+        if (! this.targetRecipe.canContain(ingredientName, this.getAllMixedIngredients())) {
             this.rejectedIngredientsCounts.increment(ingredientName);
             return false;
         }
@@ -73,6 +81,20 @@ export class Preparation {
             if (!this.contains(ingredientName)) {
                 return false;
             }
+        }
+
+        // A recipe must contain at least one ingredient of each alternative
+        const requiredIngredientAlternatives = this.targetRecipe.requiredIngredientAlternatives.values();
+        
+        alternativeLoop:
+        for (let alternative of requiredIngredientAlternatives) {
+            for (let alternativeIngredientName of alternative) {
+                if (this.contains(alternativeIngredientName)) {
+                    continue alternativeLoop;
+                }
+            }
+
+            return false;
         }
 
         return true;

@@ -31,7 +31,7 @@
             "name": "Recipe 2",
             "category": "Breakfast",
             "level": 2,
-            "requiredIngredientNames": ["Ingredient A", "Ingredient D", "Ingredient E"],
+            "requiredIngredientNames": ["Ingredient A", ["Ingredient D", "Ingredient E"]],
             "optionalIngredientNames": ["Ingredient B"],
             "ingredientEffects": [
                 {
