@@ -214,6 +214,10 @@ export class RecipeCookingScene extends Scene {
                 },
 
                 cursorChecker: (_a, _i, _e, interacting) => {
+                    if (this.game.currentPreparation.contains(ingredientName)) {
+                        return "pointer";
+                    }
+
                     return interacting ? "grabbing" : "grab";
                 }
             })
