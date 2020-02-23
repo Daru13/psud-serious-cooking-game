@@ -28,6 +28,7 @@ interface SerialisedRecipe {
     container: RecipeContainer;
     requiredIngredientNames: (string | string[])[];
     optionalIngredientNames: string[];
+    wrongIngredientNames: Set<IngredientName>;
     ingredientEffects: SerialisedIngredientEffect[];
 }
 
@@ -46,6 +47,7 @@ export class Recipe {
     readonly requiredIngredientNames: Set<IngredientName>;
     readonly requiredIngredientAlternatives: Set<Set<IngredientName>>;
     readonly optionalIngredientNames: Set<IngredientName>;
+    readonly wrongIngredientNames: Set<IngredientName>;
 
     readonly ingredientEffects: IngredientEffect[];
     readonly positiveIngredientEffects: IngredientEffect[];
@@ -59,6 +61,7 @@ export class Recipe {
                         requiredIngredientNames: Set<IngredientName>,
                         requiredIngredientAlternatives: Set<Set<IngredientName>>,
                         optionalIngredientNames: Set<IngredientName>,
+                        wrongIngredientNames: Set<IngredientName>,
                         ingredientEffects: IngredientEffect[]) {
         this.name = name;
         this.category = category;
@@ -68,6 +71,7 @@ export class Recipe {
         this.requiredIngredientNames = requiredIngredientNames;
         this.requiredIngredientAlternatives = requiredIngredientAlternatives;
         this.optionalIngredientNames = optionalIngredientNames;
+        this.wrongIngredientNames = wrongIngredientNames;
 
         this.ingredientEffects = ingredientEffects;
         this.positiveIngredientEffects = ingredientEffects.filter(effect => effect.type === IngredientEffectType.Positive);
@@ -130,6 +134,7 @@ export class Recipe {
             new Set(requiredIngredientNames as string[]),
             new Set(requiredIngredientAlternatives),
             new Set(obj.optionalIngredientNames),
+            new Set(obj.wrongIngredientNames),
             obj.ingredientEffects
         );
     }

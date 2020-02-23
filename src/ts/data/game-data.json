@@ -29,6 +29,7 @@
             "container": "BOWL",
             "requiredIngredientNames": ["Greek Yogurt"],
             "optionalIngredientNames": ["Dried Fruit", "Fresh Berries", "Honey", "Granola"],
+            "wrongIngredientNames": ["Chicken", "White Bread", "Caesar Dressing"],
             "ingredientEffects": [
                 {
                     "ingredientNames": ["Granola", "Honey"],
@@ -60,6 +61,7 @@
             "container": "PLATE",
             "requiredIngredientNames": [["Whole-grain Bread", "White Bread"], "Avocado"], 
             "optionalIngredientNames": ["Salt", "Bacon", "Egg", "Chocolate", "White Bread", "Whole-grain Bread"],
+            "wrongIngredientNames": ["Greek Yogurt"],
             "ingredientEffects": [
                 {
                     "ingredientNames": ["Whole-grain Bread"],
@@ -96,6 +98,7 @@
             "container": "BOWL",
             "requiredIngredientNames": [["Spinach","Iceberg Lettuce"], ["Balsamic Vinegar","Caesar Dressing"]],
             "optionalIngredientNames": ["Balsamic Vinegar", "Caesar Dressing", "Broccoli", "Bell Peppers", "Spinach", "Iceberg Lettuce", "Bacon"],
+            "wrongIngredientNames": ["Chocolate"],
             "ingredientEffects": [
                 {
                     "ingredientNames": ["Spinach"],

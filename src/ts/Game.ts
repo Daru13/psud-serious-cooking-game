@@ -57,6 +57,7 @@ export class Game {
             event.recipe.requiredIngredientAlternatives.forEach(alternative => {
                 alternative.forEach(name => { ingredientNames.add(name); });
             });
+            event.recipe.wrongIngredientNames.forEach(name => { ingredientNames.add(name); });
 
             this.currentPreparation = new Preparation(event.recipe, [...ingredientNames.values()]);
 
