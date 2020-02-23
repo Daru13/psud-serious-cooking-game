@@ -325,7 +325,7 @@ html {
         "ingredient-list";
     grid-template-rows: 15vh 60vh 25vh;
     grid-template-columns: auto;
-    background-image: url("../img/backgrounds/wallpaper.png");
+    background-image: url("../img/backgrounds/wallpaper-light.png");
     background-repeat: repeat;
 }
 
@@ -546,7 +546,7 @@ html {
         "action-bar   action-bar";
     grid-template-rows: 15vh 60vh 25vh;
     grid-template-columns: 40vw 60vw;
-    background-image: url("../img/backgrounds/wallpaper.png");
+    background-image: url("../img/backgrounds/wallpaper-light.png");
     background-repeat: repeat;
 }
 
