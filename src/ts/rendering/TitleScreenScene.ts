@@ -30,7 +30,7 @@ export class TitleScreenScene extends Scene {
 
     private createMainTitle(): void {
         const title = document.createElement("h1");
-        title.textContent = "Serious Cooking Game";
+        title.textContent = "Healthy Chef";
         title.classList.add("main-title");
         this.root.append(title);
     }
