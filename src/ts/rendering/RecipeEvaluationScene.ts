@@ -92,6 +92,16 @@ export class RecipeEvaluationScene extends Scene {
         });
         actionBar.append(titleScreenButton);
 
+        // Play again button
+        const playAgainButton = document.createElement("button");
+        playAgainButton.textContent = "Play again";
+        playAgainButton.classList.add("play-again-button");
+        playAgainButton.addEventListener("click", () => {
+            const targetRecipe = this.game.currentPreparation.targetRecipe;
+            EventManager.emit(new StartCookingEvent(targetRecipe));
+        });
+        actionBar.append(playAgainButton);
+
         // Next recipe button
         const nextRecipeButton = document.createElement("button");
         nextRecipeButton.textContent = "Next recipe";
