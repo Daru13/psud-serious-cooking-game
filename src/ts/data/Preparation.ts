@@ -38,6 +38,10 @@ export class Preparation {
             .map(ingredient => ingredient.key);
     }
 
+    getNbMixedIngredients(): number {
+        return this.getAllMixedIngredients().length;
+    }
+
     contains(ingredientName: IngredientName): boolean {
         return this.mixedIngredientNames.getCountOf(ingredientName) > 0;
     }

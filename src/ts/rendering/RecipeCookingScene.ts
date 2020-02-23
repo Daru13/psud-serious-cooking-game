@@ -117,6 +117,7 @@ export class RecipeCookingScene extends Scene {
     
                 this.game.currentPreparation.use(ingredientName);
                 this.updateIngredient(ingredientName);
+                this.updateMixedIngredientsCount();
                 this.updateDoneButton();
             },
         });
@@ -151,6 +152,16 @@ export class RecipeCookingScene extends Scene {
     private updateRecipeContainerPicture(): void {
         const recipeContainer = this.game.currentPreparation.targetRecipe.container;
         this.preparationPictureNode.setAttribute("data-container", recipeContainer);
+    }
+
+    private updateMixedIngredientsCount(): void {
+        const mixedIngredientsCount = document.createElement("span");
+        mixedIngredientsCount.innerText = this.game.currentPreparation
+            .getNbMixedIngredients()
+            .toFixed(0);
+        
+        emptyElement(this.preparationPictureNode);
+        this.preparationPictureNode.append(mixedIngredientsCount);
     }
 
     private updateIngredientList(): void {
@@ -195,6 +206,7 @@ export class RecipeCookingScene extends Scene {
                     this.game.currentPreparation.takeBack(ingredientName);
 
                     this.updateIngredient(ingredientName);
+                    this.updateMixedIngredientsCount();
                     this.updateDoneButton();
                 }
             });
@@ -231,6 +243,7 @@ export class RecipeCookingScene extends Scene {
 
         // Update the cooking space
         this.updateRecipeContainerPicture();
+        this.updateMixedIngredientsCount();
 
         // Update the list of ingredients
         this.updateIngredientList();
