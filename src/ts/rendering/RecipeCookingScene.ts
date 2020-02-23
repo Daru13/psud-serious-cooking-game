@@ -155,8 +155,7 @@ export class RecipeCookingScene extends Scene {
 
     private updateIngredientList(): void {
         const availableIngredientNames = this.game.currentPreparation
-            .getAllAvailableIngredients()
-            .map(count => count.key);
+            .getAllAvailableIngredients();
 
         emptyElement(this.ingredientListNode);
         for (let ingredientName of availableIngredientNames) {
