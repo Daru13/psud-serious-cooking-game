@@ -27,16 +27,12 @@ export class Game {
         this.renderer = new Renderer(this);
 
         this.registerAllEventHandlers();
-
-        console.log("Game initialised!");
     }
 
     getRandomUnlockedRecipe(): Recipe {
         const unlockedRecipeNames = [...this.progress.getUnlockedRecipeNames().values()];
         const randomIndex = Math.floor(Math.random() * unlockedRecipeNames.length);
         const recipeName = unlockedRecipeNames[randomIndex];
-
-        console.log(unlockedRecipeNames, randomIndex, recipeName)
 
         return this.data.recipes.find(recipe => recipe.name === recipeName);
     }

@@ -96,12 +96,8 @@ export class Recipe {
             
             isInAtLeastOneAlternative = true;
             
-            console.log("alternative ", alternative, "has", ingredientName)
-
             for (let otherMixedIngredientName of otherMixedIngredients) {
-                console.log("testing if alt contain " + otherMixedIngredientName)
                 if (alternative.has(otherMixedIngredientName)) {
-                    console.log("also contains ", otherMixedIngredientName)
                     return false;
                 }
             }

@@ -149,7 +149,6 @@ export class PlayerProgress {
 
     static loadFromLocalStorageOrCreate(gameData: GameData): PlayerProgress {
         const serialisedProgressCandidate = localStorage.getItem(PlayerProgress.LOCAL_STORAGE_KEY);
-        console.log(serialisedProgressCandidate);
         if (serialisedProgressCandidate === null) {
             return new PlayerProgress(gameData, true);
         }

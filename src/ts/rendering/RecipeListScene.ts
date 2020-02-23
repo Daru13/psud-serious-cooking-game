@@ -105,8 +105,6 @@ export class RecipeListScene extends Scene {
         // Add trophies to the right categories
         const categoriesWithTrophies = this.game.progress.getRecipeCategoriesWithTrophies();
 
-        console.log("categ with tropgies", categoriesWithTrophies)
-
         for (let categoryName of categoriesWithTrophies) {
             const categoryTitle = this.recipeCategoryTitleNodes.get(categoryName);
             categoryTitle.classList.add("has-trophy");
