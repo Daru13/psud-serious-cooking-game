@@ -1,8 +1,8 @@
 language: node_js
 
 node_js:
-  - 12.13
-
+  - 12.16.1
+  
 before_install:
   - nvm install node
   - npm install -g npm@latest
