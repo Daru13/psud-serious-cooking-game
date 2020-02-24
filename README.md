@@ -5,7 +5,7 @@
 This project is the prototype of a _serious game_ for the Adaptive Serious Game class of the University of Paris-Saclay.
 It was designed to teach children about healthy recipes and food choices.
 
-This prototype was co-developed with Bryan H. (healthy game designer) and Lilly A. H. (asset creator and curator).
+This prototype was co-created with Bryan H. (healthy game designer) and Lilly A. H. (asset creator and curator).
 
 **[🎮 Play the last version online](https://daru13.github.io/psud-serious-cooking-game/html)**
 
@@ -26,10 +26,10 @@ Its single runtime dependency is [`interact.js`](https://interactjs.io/), which 
 
 ### Build instructions
 
-We use [`yarn`](http://yarnpkg.com) to manage the development dependencies and to run scripts, but it should work fine if you prefer to use another package manager such as `npm`.
+I use [`yarn`](http://yarnpkg.com) to manage the development dependencies and to run scripts, but it should work fine if you prefer to use another package manager such as `npm`.
 
 To create your own build, clone this repository and run the following commands:
 - `yarn` (to install the development dependencies).
 - `yarn build` (to compile and bundle TypeScript sources into the `build` folder).
-;
+
 You can also run `yarn watch` to start Rollup in watch mode (_i.e._ automatically recompile the sources when a TypeScript file is modified).
