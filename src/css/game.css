@@ -469,12 +469,45 @@ html {
     font-size: 6rem;
 }
 
-#recipe-cooking .ingredient-list {
+#recipe-cooking .ingredient-list-container {
     grid-area: ingredient-list;
+    display: grid;
+    grid-template-columns: 10vh auto 10vh;
     height: 25vh;
-    padding: 2.5vh;
+    margin: 0;
+    padding: 0;
     background-color: #000;
     color: #FFF;
+}
+
+#recipe-cooking .ingredient-list-container .left-scroll-button,
+#recipe-cooking .ingredient-list-container .right-scroll-button {
+    display: block;
+    width: 10vh;
+    height: 25vh;
+    background-color: #3182CE;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    border: none;
+}
+
+#recipe-cooking .ingredient-list-container .left-scroll-button:hover,
+#recipe-cooking .ingredient-list-container .right-scroll-button:hover {
+    background-color: #2C5282;
+}
+
+#recipe-cooking .ingredient-list-container .left-scroll-button {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path fill="white" d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/><path d="M0 0h24v24H0V0z" fill="none"/></svg>');
+}
+
+#recipe-cooking .ingredient-list-container .right-scroll-button {
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path fill="white" d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/><path d="M0 0h24v24H0V0z" fill="none"/></svg>');
+}
+
+#recipe-cooking .ingredient-list {
+    height: 25vh;
+    padding: 2.5vh;
     overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;

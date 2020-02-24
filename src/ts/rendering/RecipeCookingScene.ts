@@ -143,9 +143,37 @@ export class RecipeCookingScene extends Scene {
     }
 
     private createIngredientList(): void {
+        const ingredientListContainer = document.createElement("div");
+        ingredientListContainer.classList.add("ingredient-list-container");
+        this.root.append(ingredientListContainer);
+
+        const scrollCallback = (toLeft = false) => {
+            const ingredient = this.ingredientListNode.querySelector(".ingredient");
+            const ingredientWidth = ingredient.getBoundingClientRect().width;
+
+            this.ingredientListNode.scrollBy({
+                left: (toLeft ? -1 : 1) * ingredientWidth,
+                top: 0,
+                behavior: "smooth"
+            });
+        };
+
+        // Left scroll button
+        const leftScrollButton = document.createElement("button");
+        leftScrollButton.classList.add("left-scroll-button");
+        leftScrollButton.addEventListener("click", () => { scrollCallback(true); })
+        ingredientListContainer.append(leftScrollButton);
+
+        // Actual list of ingredients
         const ingredientList = document.createElement("div");
         ingredientList.classList.add("ingredient-list");
-        this.root.append(ingredientList); 
+        ingredientListContainer.append(ingredientList);
+
+        // Right scroll button
+        const rightScrollButton = document.createElement("button");
+        rightScrollButton.classList.add("right-scroll-button");
+        rightScrollButton.addEventListener("click", () => { scrollCallback(false); })
+        ingredientListContainer.append(rightScrollButton);
         
         this.ingredientListNode = ingredientList;
     }
