@@ -14,7 +14,7 @@ export default {
       globals: {
         "interactjs": "interact"
       },
-      plugins: [/*terser()*/]
+      plugins: [terser()]
     }
   ],
 
