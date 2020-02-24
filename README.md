@@ -7,7 +7,7 @@ It was designed to teach children about healthy recipes and food choices.
 
 This prototype was co-developed with Bryan H. (healthy game designer) and Lilly A. H. (asset creator and curator).
 
-**[🎮 Play the last version online](https://daru13.github.io/semantic-web-visualisation/demo/)**
+**[🎮 Play the last version online](https://daru13.github.io/psud-serious-cooking-game/html)**
 
 **Note for mobile players:** the game should work fine, except for the horizontal scrolling of the list of ingredient!
 
